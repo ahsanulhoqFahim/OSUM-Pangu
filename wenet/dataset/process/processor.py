@@ -14,6 +14,7 @@
 import codecs
 import copy
 import os
+import traceback
 
 # import cn2an
 import librosa
@@ -123,10 +124,12 @@ def url_opener(data):
         assert 'src' in sample
         # TODO(Binbin Zhang): support HTTP
         url = sample['src']
+        if "|" not in url:
+            utils_file.logging_error(f'OSUM-EChat url_opener 错误，url格式不正确 {url}, 不含有|')
+            continue
         combine_path, shard_path = url.split('|')
         if combine_path == "-":
             big_dict = None
-            pass
         else:
             dict_list = load_dict_list_from_jsonl(combine_path)
             big_dict = {}
@@ -258,15 +261,19 @@ def tar_file_and_group_full_data(data, total_num=0):
                 with stream.extractfile(tarinfo) as file_obj:
                     try:
                         if big_dict is not None:
-                            if postfix not in big_dict:
-                                raise Exception(f'{postfix} not in big_dict')
+                            if prefix not in big_dict:
+                                raise Exception(f'{prefix} not in big_dict')
                             else:
+                                info_dict = big_dict[prefix]
+                                if 'txt' not in info_dict or 'task' not in info_dict or 'extra' not in info_dict:
+                                    raise Exception(f'info_dict {info_dict} not include txt, task, extra')
+                                utils_file.logging_limit_print(f'info dict: {info_dict}')
                                 if postfix == 'txt':
-                                    example['txt'] = big_dict[postfix]['txt']
+                                    example['txt'] = info_dict['txt']
                                 elif postfix == 'task':
-                                    example['task'] = big_dict[postfix]['task']
+                                    example['task'] = info_dict['task']
                                 elif postfix == 'extra':
-                                    example['extra'] = big_dict[postfix]['extra']
+                                    example['extra'] = info_dict['extra']
                                 elif postfix in AUDIO_FORMAT_SETS:
                                     waveform, sample_rate = torchaudio.load(file_obj)
                                     # 检查音频的维度
@@ -299,7 +306,17 @@ def tar_file_and_group_full_data(data, total_num=0):
                                 pass
                     except Exception as ex:
                         valid = False
-                        utils_file.logging_limit_print(f'error to parse {name} 错误！!:{ex}')
+                        utils_file.logging_limit_print('error to parse ex: {}'.format(ex))
+                        # 1. 基础信息：错误对象、文件名、错误类型
+                        # error_msg = (
+                        #     f"Failed to parse {name}! "
+                        #     f"Error type: {type(ex).__name__}, "
+                        #     f"Message: {str(ex)}"
+                        # )
+                        # # 2. 补充堆栈跟踪（完整调用链路）
+                        # stack_trace = traceback.format_exc()
+                        # # 3. 组合日志信息，使用warning级别输出（或error级别更合适）
+                        # logging.warning(f"{error_msg}\nStack trace:\n{stack_trace}")
                 prev_prefix = prefix
             if prev_prefix is not None:
                 example['key'] = prev_prefix
@@ -676,7 +693,20 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
             if 'think_str' in final_extra:
                 think_str = final_extra['think_str']
                 txt = f'<think>{think_str}<think end>{txt}'
+            else:
+                utils_file.logging_error(f"error: think_str is not in extra, {sample}")
+                continue
         # =======================处理s2t think end=====================================
+
+        # ===================处理s2s think============================================
+        if task_name == "<S2TCHAT> <TEXT2TOKEN> <THINK>":
+            if 'think_str' in final_extra:
+                think_str = final_extra['think_str']
+                txt = f'<think>{think_str}<think end>{txt}'
+            else:
+                utils_file.logging_error(f"error: think_str is not in extra, {sample}")
+                continue
+        # ====================处理s2s think end============================================
 
 
         # =======================得到 txt的数字化token =================================
@@ -832,10 +862,10 @@ def filter(data,
                 continue
 
         # 过滤不当文字wav比例
-        # if "speech_token" in sample and sample["output_type"] not in ['text','text2text', 'text2token', 's2t_chat', 's2t_chat_fake']:
-        #     if len(sample['original_txt']) * 3 >= len(sample['speech_token']):
-        #         utils_file.logging_error(f"label 长度过长,和token长度不匹配，continue, len(sample['label']):{len(sample['label'])}, len(sample['speech_token']):{len(sample['speech_token'])}, original_txt: {sample['original_txt']}, task: {sample['task']}")
-        #         continue
+        # if "speech_token" in sample and sample["output_type"] not in ['text','text2text', 's2t_chat', 's2t_chat_fake']:
+            # if len(sample['original_txt']) * 3 >= len(sample['speech_token']):
+            #     utils_file.logging_error(f"label 长度过长,和token长度不匹配，continue, len(sample['label']):{len(sample['label'])}, len(sample['speech_token']):{len(sample['speech_token'])}, original_txt: {sample['original_txt']}, task: {sample['task']}")
+            #     continue
             # if len(sample['label'])>=5 and len(sample['speech_token']) > 125 and len(sample['label']) * 8.33 < len(sample['speech_token']): # 5s以上的音频，label长度大于5，限制用每秒至少3个文字
             #     utils_file.logging_error(f"label 长度过短,和token长度不匹配，continue, len(sample['label']):{len(sample['label'])}, len(sample['speech_token']):{len(sample['speech_token'])},len(sample['label']) * 8.33 < len(sample['speech_token'])")
             #     continue

@@ -113,7 +113,7 @@ dataset_conf:
       only_t2s: false # 只针对与t2s dataloader的过滤
     use_50_per_change_if_only_X: true # 50%的句子随机替换为其only X
     use_s2s_streaming_random:
-      enable: true
+      enable: false
       rate: 0.5 # 1.0 表示100%的句子随机替换为其only X
     natural_language_convert:
       enable: false

@@ -942,6 +942,70 @@ class LLMASR_Model(nn.Module):
 
         return output_text
 
+    def generate4chat_think(
+            self,
+            wavs,
+            wavs_len,
+            do_sample=True,
+            top_k=2,
+            top_p=1,
+            temperature=0.4,
+    ):
+        print(f'do_sample: {do_sample}, top_k: {top_k}, top_p: {top_p}, temperature: {temperature}')
+        self.llama_model.eval()
+        # self.set_task_type("ASR")
+        # self.do_add_speech_embed_head()
+        # self.do_merge_embed_head()
+        speech_embeds, speech_masks = self._get_embedding_from_wav(wavs, wavs_len)
+        speech_embeds, speech_masks, _ = self._add_bos_eos(0 + self.speech_token_num, 1 + self.speech_token_num,
+                                                           speech_embeds, speech_masks, None)
+        # prompt = self.tokenizer([prompt], return_tensors="pt"
+        #                         )['input_ids'].to(speech_embeds.device)
+        # prompt_embeds = self.embed_tokens(prompt)
+
+        # qwen_instruct_prompt_pattern_1 = "<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\n"
+        # # sft
+        qwen_instruct_prompt_pattern_1 = "<|im_start|>system\nYou are OSUM-chat, a thinking-enabled speech-to-text dialogue assistant by ASLP Lab. You not only comprehend the semantic meaning and paralinguistic cues in speech but also engage in deliberate reasoning to process such information. Based on this thinking process, you then respond exclusively with appropriate text.<|im_end|>\n"
+        prompt_pattern1 = self.tokenizer([qwen_instruct_prompt_pattern_1] * len(wavs_len), return_tensors="pt"
+                                         )['input_ids'].to(speech_embeds.device)
+        prompt_pattern1_embeds = self.embed_tokens(prompt_pattern1)
+
+        qwen_instruct_prompt_pattern_2 = "<|im_end|>\n<|im_start|>assistant\n"
+        prompt_pattern2 = self.tokenizer([qwen_instruct_prompt_pattern_2] * len(wavs_len), return_tensors="pt"
+                                         )['input_ids'].to(speech_embeds.device)
+        prompt_pattern2_embeds = self.embed_tokens(prompt_pattern2)
+
+        embeds = torch.cat([prompt_pattern1_embeds, speech_embeds, prompt_pattern2_embeds], dim=1)
+        atts = torch.ones(embeds.size()[:-1], dtype=torch.long).to(embeds.device)
+
+        if self.embed_tokens.weight.dtype == torch.float16 or self.embed_tokens.weight.dtype == torch.bfloat16:
+            # utils_file.logging_limit_print('generate(): self.embed_tokens.weight.dtype == torch.float16')
+            # embeds = embeds.to(torch.float16)
+            embeds = embeds.to(torch.bfloat16)
+            atts = atts.to(torch.bfloat16)
+        outputs = self.llama_model.generate(
+            inputs_embeds=embeds,
+            max_new_tokens=self.max_length,
+            # cache_implementation="static",
+            # num_beams=1,
+            do_sample=do_sample,
+            min_length=self.min_length,
+            top_p=top_p,
+            top_k=top_k,
+            repetition_penalty=self.repetition_penalty,
+            length_penalty=1,
+            temperature=temperature,
+            # attention_mask=atts,
+            eos_token_id=151645,
+            pad_token_id=-100,
+            do_compile=True,
+            stopping_criteria=self.max_token_criteria_list,
+        )
+
+        output_text = self.tokenizer.batch_decode(outputs, add_special_tokens=False, skip_special_tokens=True)
+
+        return output_text
+
 
     def generate_s2s_no_stream(
             self,
