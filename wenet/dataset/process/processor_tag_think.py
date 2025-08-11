@@ -700,17 +700,53 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
         emotion_tag, txt = process_tagged_string(txt)  # 如果开头没<中立>，则加上<中立>
         # =======================处理s2t think========================================
         if task_name == "<S2TCHAT> <THINKER>":
-            if 'think_str' in final_extra:
-                think_str = final_extra['think_str']
-                txt = f'<think>{think_str}<think end>{txt}'
-            else:
-                utils_file.logging_error(f"error: think_str is not in extra, {sample}")
+            q_txt = final_extra.get("q_txt", None)
+            if q_txt is None:
+                utils_file.logging_error(f"error: question is not in extra, {sample}")
                 continue
+            age_tag = final_extra.get("age", None)
+            gender_tag = final_extra.get("gender", None)
+            caption_tag = final_extra.get("caption", None)
+            q_emotion_tag = final_extra.get("q_emotion", None)
+            unk_rate = 0.95
+            if random.random() < unk_rate:
+                is_unk = True
+            else:
+                is_unk = False
+            if q_emotion_tag is not None:
+                if not q_emotion_tag.startswith("<") and not q_emotion_tag.endswith(">"):
+                    q_emotion_tag = "<" + q_emotion_tag + ">"
+            else:
+                q_emotion_tag = unk_tag if is_unk else "<NEUTRAL>"
+
+            if emotion_tag not in answer_emotion_tags or emotion_tag == "<NEUTRAL>":
+                old_emotion_tag = emotion_tag
+                emotion_tag = unk_tag if is_unk else "<NEUTRAL>"
+                if is_unk:
+                    txt = txt.replace(old_emotion_tag, emotion_tag)
+
+            if age_tag is not None:
+                if not age_tag.startswith("<") and not age_tag.endswith(">"):
+                    age_tag = "<" + age_tag + ">"
+            else:
+                age_tag = unk_tag if is_unk else "<ADULT>"
+            if gender_tag is not None:
+                if not gender_tag.startswith("<") and not gender_tag.endswith(">"):
+                    gender_tag = "<" + gender_tag + ">"
+            else:
+                gender_tag = unk_tag if is_unk else "<MALE>"
+            if caption_tag is not None:
+                if not caption_tag.startswith("<") and not caption_tag.endswith(">"):
+                    caption_tag = "<" + caption_tag + ">"
+            else:
+                caption_tag = unk_tag if is_unk else "<OTHER>"
+            think_txt = f"<think>用户说的话是:{q_txt},年龄为:{age_tag},性别为:{gender_tag},情感为:{q_emotion_tag},声音事件为:{caption_tag},推测使用的回复情感为:{emotion_tag},我应该综合用户的语义和副语言信息给出专业且对应的回答<think end>"
+            txt = f"{think_txt}{txt}"
         # =======================处理s2t think end=====================================
 
         # ===================处理s2s think============================================
         if task_name == "<S2TCHAT> <TEXT2TOKEN> <THINK>":
-            q_txt = final_extra.get("question", None)
+            q_txt = final_extra.get("q_txt", None)
             if q_txt is None:
                 utils_file.logging_error(f"error: question is not in extra, {sample}")
                 continue
@@ -903,16 +939,18 @@ def filter(data,
                 continue
 
         # 过滤不当文字wav比例
-        # if "speech_token" in sample and sample["output_type"] not in ['text','text2text', 's2t_chat', 's2t_chat_fake']:
-        # if len(sample['original_txt']) * 3 >= len(sample['speech_token']):
-        #     utils_file.logging_error(f"label 长度过长,和token长度不匹配，continue, len(sample['label']):{len(sample['label'])}, len(sample['speech_token']):{len(sample['speech_token'])}, original_txt: {sample['original_txt']}, task: {sample['task']}")
-        #     continue
-        # if len(sample['label'])>=5 and len(sample['speech_token']) > 125 and len(sample['label']) * 8.33 < len(sample['speech_token']): # 5s以上的音频，label长度大于5，限制用每秒至少3个文字
-        #     utils_file.logging_error(f"label 长度过短,和token长度不匹配，continue, len(sample['label']):{len(sample['label'])}, len(sample['speech_token']):{len(sample['speech_token'])},len(sample['label']) * 8.33 < len(sample['speech_token'])")
-        #     continue
-        # elif len(sample['label']) * 10 < len(sample['speech_token']):
-        #     utils_file.logging_error(f"label 长度过长,和token长度不匹配，continue, len(sample['label']):{len(sample['label'])}, len(sample['speech_token']):{len(sample['speech_token'])},len(sample['label']) * 10 < len(sample['speech_token'])")
-        #     continue
+        if "speech_token" in sample and sample["output_type"] not in ['text', 'text2text', 's2t_chat',
+                                                                      's2t_chat_fake']:
+            if len(sample['label']) * 0.8 >= len(sample['speech_token']):
+                utils_file.logging_error(
+                    f"label 长度过长,和token长度不匹配，continue, len(sample['label']):{len(sample['label'])}, len(sample['speech_token']):{len(sample['speech_token'])},  task: {sample['task']}")
+                continue
+            # if len(sample['label'])>=5 and len(sample['speech_token']) > 125 and len(sample['label']) * 8.33 < len(sample['speech_token']): # 5s以上的音频，label长度大于5，限制用每秒至少3个文字
+            #     utils_file.logging_error(f"label 长度过短,和token长度不匹配，continue, len(sample['label']):{len(sample['label'])}, len(sample['speech_token']):{len(sample['speech_token'])},len(sample['label']) * 8.33 < len(sample['speech_token'])")
+            #     continue
+            # elif len(sample['label']) * 10 < len(sample['speech_token']):
+            #     utils_file.logging_error(f"label 长度过长,和token长度不匹配，continue, len(sample['label']):{len(sample['label'])}, len(sample['speech_token']):{len(sample['speech_token'])},len(sample['label']) * 10 < len(sample['speech_token'])")
+            #     continue
 
         txt = sample['txt']
         if txt == "None_in_extract_answer":

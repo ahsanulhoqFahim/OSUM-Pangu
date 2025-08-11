@@ -34,6 +34,7 @@ caption_common_50_label:
 caption_xianshi:
   path: /home/A02_tmpdata3/osum_s2s/caption_s2s_xianshi_20250806/raw_data/s2s_data/xlgeng_new_data/s2t_thinking/combines_list.txt
   tar_num: 6
+  weight: 10
 
 
 # emotion
@@ -84,6 +85,7 @@ caption_common_50_label_no_thinking:
 caption_xianshi_no_thinking:
   path: /home/A02_tmpdata3/osum_s2s/caption_s2s_xianshi_20250806/raw_data/s2s_data/xlgeng_new_data/s2t_no_thinking/combines_list.txt
   tar_num: 6
+  weight: 10
 
 
 # emotion
