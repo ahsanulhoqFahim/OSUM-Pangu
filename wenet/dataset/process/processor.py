@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import codecs
 import copy
 import os
 
@@ -96,6 +96,19 @@ def check_txt_format(s):
     else:
         return False, -1
 
+def load_dict_list_from_jsonl(jsonl_file_path) -> list:
+    """"""
+    with codecs.open(jsonl_file_path, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+        lines_res = []
+        for line in lines:
+            try:
+                line = json.loads(line)
+                lines_res.append(line)
+            except Exception as e:
+                print(e)
+                continue
+    return lines_res
 def url_opener(data):
     """ Give url or local file, return file descriptor
         Inplace operation.
@@ -112,28 +125,28 @@ def url_opener(data):
         url = sample['src']
         combine_path, shard_path = url.split('|')
         if combine_path == "-":
-            big_dict = {}
+            big_dict = None
             pass
         else:
-            dict_list = utils_file.load_dict_list_from_jsonl(combine_path)
-            big_dict = None
+            dict_list = load_dict_list_from_jsonl(combine_path)
+            big_dict = {}
             for item in dict_list:
                 big_dict[item['key']] = item
         try:
-            pr = urlparse(url)
+            pr = urlparse(shard_path)
             # local file
             if pr.scheme == '' or pr.scheme == 'file':
-                stream = open(url, 'rb')
+                stream = open(shard_path, 'rb')
             # network file, such as HTTP(HDFS/OSS/S3)/HTTPS/SCP
             else:
-                cmd = f'wget -q -O - {url}'
+                cmd = f'wget -q -O - {shard_path}'
                 process = Popen(cmd, shell=True, stdout=PIPE)
                 sample.update(process=process)
                 stream = process.stdout
             sample.update(stream=stream,big_dict=big_dict)
             yield sample
         except Exception as ex:
-            logging.warning('Failed to open {}'.format(url))
+            logging.warning('Failed to open {}'.format(shard_path))
 
 
 def tar_file_and_group(data):
@@ -245,23 +258,26 @@ def tar_file_and_group_full_data(data, total_num=0):
                 with stream.extractfile(tarinfo) as file_obj:
                     try:
                         if big_dict is not None:
-                            if postfix == 'txt':
-                                example['txt'] = big_dict[postfix]['txt']
-                            elif postfix == 'task':
-                                example['task'] = big_dict[postfix]['task']
-                            elif postfix == 'extra':
-                                example['extra'] = big_dict[postfix]['extra']
-                            elif postfix in AUDIO_FORMAT_SETS:
-                                waveform, sample_rate = torchaudio.load(file_obj)
-                                # 检查音频的维度
-                                num_channels = waveform.shape[0]
-                                # 如果音频是多通道的，则进行通道平均
-                                if num_channels > 1:
-                                    waveform = torch.mean(waveform, dim=0, keepdim=True)
-                                example['wav'] = waveform
-                                example['sample_rate'] = sample_rate
+                            if postfix not in big_dict:
+                                raise Exception(f'{postfix} not in big_dict')
                             else:
-                                pass
+                                if postfix == 'txt':
+                                    example['txt'] = big_dict[postfix]['txt']
+                                elif postfix == 'task':
+                                    example['task'] = big_dict[postfix]['task']
+                                elif postfix == 'extra':
+                                    example['extra'] = big_dict[postfix]['extra']
+                                elif postfix in AUDIO_FORMAT_SETS:
+                                    waveform, sample_rate = torchaudio.load(file_obj)
+                                    # 检查音频的维度
+                                    num_channels = waveform.shape[0]
+                                    # 如果音频是多通道的，则进行通道平均
+                                    if num_channels > 1:
+                                        waveform = torch.mean(waveform, dim=0, keepdim=True)
+                                    example['wav'] = waveform
+                                    example['sample_rate'] = sample_rate
+                                else:
+                                    pass
                         else:
                             if postfix == 'txt':
                                 example['txt'] = file_obj.read().decode('utf8').strip()
@@ -283,7 +299,7 @@ def tar_file_and_group_full_data(data, total_num=0):
                                 pass
                     except Exception as ex:
                         valid = False
-                        logging.warning(f'error to parse {name} 错误！!:{ex}')
+                        utils_file.logging_limit_print(f'error to parse {name} 错误！!:{ex}')
                 prev_prefix = prefix
             if prev_prefix is not None:
                 example['key'] = prev_prefix
