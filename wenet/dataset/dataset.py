@@ -364,8 +364,8 @@ def BigDataset(data_type,
 
     tmp_file_s2t = do_get_fake_file()
     s2s_list = utils_file.load_list_file_clean(data_list_file_s2s)
-    s2s_list_little = s2s_list[::3]
-    # s2s_list_little = []
+    # s2s_list_little = s2s_list[::3]
+    s2s_list_little = []
     s2t_list = utils_file.load_list_file_clean(data_list_file_s2t)
     s2t_full_list = s2t_list + s2s_list_little
     utils_file.write_list_to_file(s2t_full_list, tmp_file_s2t)

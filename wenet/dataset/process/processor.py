@@ -502,8 +502,8 @@ def process_tagged_string(s):
         tag = match.group(1)
         return f"<{tag}>", s
     else:
-        new_s = "<NEUTRAL>" + s
-        return "<NEUTRAL>", new_s
+        new_s = "<中立>" + s
+        return "<中立>", new_s
 
 
 def split_txt2asr_tag(text):
@@ -580,6 +580,7 @@ answer_emotion_tags = {"<ANGER>","<FEAR>","<HAPPY>","<SURPRISE>","<SAD>","<DISGU
 age_tags = {"<CHILD>", "<ADULT>", "<OLD>"}
 gender_tags = {"<MALE>", "<FEMALE>"}
 none_tags = {"<NONE>", "<NULL>", "<None>", "<none>", "<null>"}
+
 
 def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, global_prompt_dict=None, speech_token_num=1):
     """ Decode text to chars or BPE
@@ -688,6 +689,8 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
                 sample['task'] = task_name
         # =======================对tts任务处理结束=======================================
 
+
+        emotion_tag, txt = process_tagged_string(txt) # 如果开头没<中立>，则加上<中立>
         # =======================处理s2t think========================================
         if task_name == "<S2TCHAT> <THINKER>":
             if 'think_str' in final_extra:
