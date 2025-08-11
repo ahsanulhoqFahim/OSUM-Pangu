@@ -37,7 +37,7 @@ stop_stage=0
 # You should change the following two parameters for multiple machine training,
 # see https://pytorch.org/docs/stable/elastic/run.html
 #HOST_NODE_ADDR=192.168.0.38
-HOST_NODE_ADDR=10.21.4.3
+HOST_NODE_ADDR=10.21.4.2
 HOST_PORT=29408
 # HOST_NODE_ADDR="127.0.0.1:29401"
 num_nodes=1
