@@ -510,6 +510,26 @@ def process_tagged_string(s):
         return "<中立>", new_s
 
 
+def process_tagged_string_and_delete_tag_from_txt(s):
+    """
+    处理带标签的字符串，提取标签并返回标签和去除标签后的内容
+    Args:
+        s: 带标签的字符串，格式如 "<tag>XXXX"
+
+    Returns:
+        元组 (标签, 去除标签后的内容)，例如 ("<tag>", "XXXX")
+    """
+    # 匹配以<标签>开头的字符串
+    match = re.match(r'^<([^<>]+)>(.*)$', s)
+    if match:
+        tag = match.group(1)
+        content = match.group(2).lstrip()  # 去除标签后的内容（可选项：移除开头空格）
+        return f"<{tag}>", content
+    else:
+        # 无标签时添加默认<中立>标签，返回标签和原始内容
+        return "<中立>", s
+
+
 def split_txt2asr_tag(text):
     # 使用正则表达式匹配标签
     match = re.match(r'^(.*?)(<[^>]+>)$', text)
@@ -693,10 +713,10 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
                 sample['task'] = task_name
         # =======================对tts任务处理结束=======================================
 
-
+        emotion_tag, txt = process_tagged_string_and_delete_tag_from_txt(txt)
         # =======================处理s2t think========================================
         if task_name == "<S2TCHAT> <THINKER>":
-            emotion_tag, txt = process_tagged_string(txt)  # 如果开头没<中立>，则加上<中立>
+            # emotion_tag, txt = process_tagged_string(txt)  # 如果开头没<中立>，则加上<中立>
             if 'think_str' in final_extra:
                 think_str = final_extra['think_str']
                 txt = f'<think>{think_str}<think end>{txt}'
@@ -707,7 +727,7 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
 
         # ===================处理s2s think============================================
         if task_name == "<S2TCHAT> <TEXT2TOKEN> <THINK>":
-            emotion_tag, txt = process_tagged_string(txt)  # 如果开头没<中立>，则加上<中立>
+            # emotion_tag, txt = process_tagged_string(txt)  # 如果开头没<中立>，则加上<中立>
             if 'think_str' in final_extra:
                 think_str = final_extra['think_str']
                 txt = f'<think>{think_str}<think end>{txt}'

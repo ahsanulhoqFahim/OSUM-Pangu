@@ -125,13 +125,13 @@ librispeech:
   lab_path: "/home/work_nfs15/asr_data/data/LibriSpeech/LibriSpeech_shard_common/shards_list.txt"
   path: "/home/A03_tmpdata3/asr_data/librispeech/shards_list.txt"
   shard_num: 282
-  weight: 0.2
+  weight: 1
 mix_asru200_add_2025_2_14:
   huawei_path: "/mnt/sfs/asr/update_data/mix_asru200_add_2025_2_14/shards_list.txt" # 200
   path: "/home/A03_tmpdata1/s2s/asru700/train/shards_list.txt"
   lab_path: "/home/work_nfs15/asr_data/data/ASRU700/train/shards_list.txt" # 中英混单词之间是有空格的
   shard_num: 187
-  weight: 0.5
+  weight: 1
 
 
 
