@@ -33,7 +33,7 @@ accum_grad: 8
 log_interval: 10
 save_interval: 1250 #1250 #2500
 max_epoch: 1
-init_step: true
+init_step: false
 
 # training config
 optim: adamw
@@ -56,7 +56,7 @@ dataset_conf:
     batch_size: 26
     batch_type: dynamic
     max_frames_in_batch: 28000000 #3000 #9000 #3000 #3300 # 3900
-    max_seq_in_batch: 3900 #1500 #4000 #1100 #1600 # 1900
+    max_seq_in_batch: 3700 #1500 #4000 #1100 #1600 # 1900
   feats_type: log_mel_spectrogram
   filter_conf:
     max_length: 20000

@@ -38,7 +38,7 @@ stop_stage=0
 # see https://pytorch.org/docs/stable/elastic/run.html
 #HOST_NODE_ADDR=192.168.0.38
 HOST_NODE_ADDR=10.21.4.2
-HOST_PORT=29408
+HOST_PORT=29401
 # HOST_NODE_ADDR="127.0.0.1:29401"
 num_nodes=1
 job_id=2023
@@ -59,7 +59,8 @@ dir=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t_s2s_lang
 #checkpoint=/home/A02_tmpdata3/ckpt/osum_chat/epoch1_all_data/step_3442.pt
 #checkpoint=/home/A02_tmpdata3/ckpt/osum_chat/epoch1_all_data/step_5633.pt
 #checkpoint=/home/A02_tmpdata3/ckpt/osum_chat/epoch2_all_data/step_4999.pt
-checkpoint=/home/A02_tmpdata3/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t/step_1249.pt
+# checkpoint=/home/A02_tmpdata3/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t/step_1249.pt
+checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t_s2s_language_think/step_4999.pt
 
 mkdir -p $dir
 data=$dir/data
@@ -79,7 +80,7 @@ python common_utils/load_combine_type_yaml.py $gxl_data_json_info_path_t2t $trai
 # train_data=conf/asr_data4huawei.list
 cv_data=$data/asr_cv.list
 head -n 1 $train_data_s2t > $cv_data
-exit 0
+# exit 0
 
 
 

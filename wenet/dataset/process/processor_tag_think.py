@@ -139,7 +139,11 @@ def url_opener(data):
         if combine_path == "-":
             big_dict = None
         else:
-            dict_list = load_dict_list_from_jsonl(combine_path)
+            try:
+                dict_list = load_dict_list_from_jsonl(combine_path)
+            except Exception as e:
+                utils_file.logging_error(f'OSUM-EChat url_opener 错误，加载combine_path {combine_path} 失败 {e}')
+                dict_list = []
             big_dict = {}
             for item in dict_list:
                 big_dict[item['key']] = item
@@ -702,8 +706,10 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
         if task_name == "<S2TCHAT> <THINKER>":
             q_txt = final_extra.get("q_txt", None)
             if q_txt is None:
-                utils_file.logging_error(f"error: question is not in extra, {sample}")
-                continue
+                q_txt = final_extra.get("question", None)
+                if q_txt is None:
+                    utils_file.logging_error(f"error: question or q_txt is not in extra, {sample}")
+                    continue
             age_tag = final_extra.get("age", None)
             gender_tag = final_extra.get("gender", None)
             caption_tag = final_extra.get("caption", None)
@@ -748,8 +754,10 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
         if task_name == "<S2TCHAT> <TEXT2TOKEN> <THINK>":
             q_txt = final_extra.get("q_txt", None)
             if q_txt is None:
-                utils_file.logging_error(f"error: question is not in extra, {sample}")
-                continue
+                q_txt = final_extra.get("question", None)
+                if q_txt is None:
+                    utils_file.logging_error(f"error: question or q_txt is not in extra, {sample}")
+                    continue
             age_tag = final_extra.get("age", None)
             gender_tag = final_extra.get("gender", None)
             caption_tag = final_extra.get("caption", None)
@@ -939,11 +947,9 @@ def filter(data,
                 continue
 
         # 过滤不当文字wav比例
-        if "speech_token" in sample and sample["output_type"] not in ['text', 'text2text', 's2t_chat',
-                                                                      's2t_chat_fake']:
+        if "speech_token" in sample and sample["output_type"] not in ['text','text2text', 's2t_chat', 's2t_chat_fake', 's2t_chat_think']:
             if len(sample['label']) * 0.8 >= len(sample['speech_token']):
-                utils_file.logging_error(
-                    f"label 长度过长,和token长度不匹配，continue, len(sample['label']):{len(sample['label'])}, len(sample['speech_token']):{len(sample['speech_token'])},  task: {sample['task']}")
+                utils_file.logging_error(f"label 长度过长,和token长度不匹配，continue, len(sample['label']):{len(sample['label'])}, len(sample['speech_token']):{len(sample['speech_token'])},  task: {sample['task']}")
                 continue
             # if len(sample['label'])>=5 and len(sample['speech_token']) > 125 and len(sample['label']) * 8.33 < len(sample['speech_token']): # 5s以上的音频，label长度大于5，限制用每秒至少3个文字
             #     utils_file.logging_error(f"label 长度过短,和token长度不匹配，continue, len(sample['label']):{len(sample['label'])}, len(sample['speech_token']):{len(sample['speech_token'])},len(sample['label']) * 8.33 < len(sample['speech_token'])")
