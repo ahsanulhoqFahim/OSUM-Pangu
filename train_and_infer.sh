@@ -83,7 +83,12 @@ python common_utils/load_combine_type_yaml.py $gxl_data_json_info_path_t2t $trai
 # train_data=conf/asr_data4huawei.list
 cv_data=$data/asr_cv.list
 head -n 1 $train_data_s2t > $cv_data
- exit 0
+wc -l  "$train_data_s2t"
+wc -l "$train_data_t2s"
+wc -l "$train_data_s2s"
+wc -l "$train_data_t2t"
+
+# exit 0
 
 
 
