@@ -754,6 +754,8 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
                 caption_tag = unk_tag if is_unk else "<OTHER>"
             think_txt = f"<think>用户说的话是:{q_txt},年龄为:{age_tag},性别为:{gender_tag},情感为:{q_emotion_tag},声音事件为:{caption_tag},推测使用的回复情感为:{emotion_tag},我应该综合用户的语义和副语言信息给出专业且对应的回答<think end>"
             txt = f"{think_txt}{txt}"
+            if random.random() < 0.01:
+                utils_file.logging_warning(f"s2t think txt: {txt}")
         # =======================处理s2t think end=====================================
 
         # ===================处理s2s think============================================
@@ -803,6 +805,8 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
                 caption_tag = unk_tag if is_unk else "<OTHER>"
             think_txt = f"<think>用户说的话是:{q_txt},年龄为:{age_tag},性别为:{gender_tag},情感为:{q_emotion_tag},声音事件为:{caption_tag},推测使用的回复情感为:{emotion_tag},我应该综合用户的语义和副语言信息给出专业且对应的回答<think end>"
             txt = f"{think_txt}{txt}"
+            if random.random() < 0.01:
+                utils_file.logging_warning(f"s2t think txt: {txt}")
         # ====================处理s2s think end============================================
 
         # =======================得到 txt的数字化token =================================
