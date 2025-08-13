@@ -2,77 +2,48 @@
 
 # age gender,
 age_gender_common:
-  path: /home/A02_tmpdata3/osum_s2s/gender/xlgeng_new_data/s2s_thinking/kokoro/combines_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/gender/xlgeng_new_data/s2s_thinking/doubao/combines_list.txt
   tar_num: 1511
+  weight: 2
 
 gender_xianshi:
-  path: /home/A02_tmpdata3/osum_s2s/sex_xianshi_cosyvoice2_by_cywang_added_by_20250625/raw_data/s2s_handle/xlgeng_new_data/s2s_thinking/kokoro/combines_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/sex_xianshi_cosyvoice2_by_cywang_added_by_20250625/raw_data/s2s_handle/xlgeng_new_data/s2s_thinking/doubao/combines_list.txt
   tar_num: 30
+  weight: 2
+
 
 gender_yinshi_3k:
-  path: /home/A02_tmpdata3/osum_s2s/S2SChat_sex_yinshi_7_4_osum_by_cywang_added_by_20250708/raw_data/s2s_handle/xlgeng_new_data/s2s_thinking/kokoro/combines_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/S2SChat_sex_yinshi_7_4_osum_by_cywang_added_by_20250708/raw_data/s2s_handle/xlgeng_new_data/s2s_thinking/doubao/combines_list.txt
   tar_num: 3
+  weight: 2
 
 gender_yinshi_5k:
-  path: /home/A02_tmpdata3/osum_s2s/S2SChat_sex_yinshi_5000_6_13_data_by_gjli_added_by_20250622/raw_data/s2s_handle/xlgeng_new_data/s2s_thinking/kokoro/combines_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/S2SChat_sex_yinshi_5000_6_13_data_by_gjli_added_by_20250622/raw_data/s2s_handle/xlgeng_new_data/s2s_thinking/doubao/combines_list.txt
   tar_num: 6
+  weight: 2
 
 age_xianshi:
-  path: /home/A02_tmpdata3/osum_s2s/age_xianshi_cosyvoice2_by_cywang_added_by_20250625/raw_data/s2s_handle/xlgeng_new_data/s2s_thinking/kokoro/combines_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/age_xianshi_cosyvoice2_by_cywang_added_by_20250625/raw_data/s2s_handle/xlgeng_new_data/s2s_thinking/doubao/combines_list.txt
   tar_num: 25
+  weight: 2
 
 
 # caption
 caption_common_7label:
-  path: /home/A02_tmpdata3/osum_s2s/caption/raw_data/xlgeng_new_data/s2s_thinking/kokoro/combines_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/caption/raw_data/xlgeng_new_data/s2s_thinking/doubao/combines_list.txt
   tar_num: 162
+  weight: 2
 
 caption_common_50_label:
-  path: /home/A02_tmpdata3/osum_s2s/caption_add_2025_1_6/raw_data/s2s_data_with_gender/xlgeng_new_data/s2s_thinking/kokoro/combines_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/caption_add_2025_1_6/raw_data/s2s_data_with_gender/xlgeng_new_data/s2s_thinking/doubao/combines_list.txt
   tar_num: 395  # 实际是196k
+  weight: 2
 
 caption_xianshi:
-  path: /home/A02_tmpdata3/osum_s2s/caption_s2s_xianshi_20250806/raw_data/s2s_data/xlgeng_new_data/s2s_thinking/kokoro/combines_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/caption_s2s_xianshi_20250806/raw_data/s2s_data/xlgeng_new_data/s2s_thinking/doubao/combines_list.txt
   tar_num: 6
   weight: 10
 
-
-#---------------------------sensevoice-------------
-# age gender,
-age_gender_common_sensevoice:
-  path: /home/A02_tmpdata3/osum_s2s/gender/xlgeng_new_data/s2s_thinking/sensevoice/combines_list.txt
-  tar_num: 1511
-
-gender_xianshi_sensevoice:
-  path: /home/A02_tmpdata3/osum_s2s/sex_xianshi_cosyvoice2_by_cywang_added_by_20250625/raw_data/s2s_handle/xlgeng_new_data/s2s_thinking/sensevoice/combines_list.txt
-  tar_num: 30
-
-gender_yinshi_3k_sensevoice:
-  path: /home/A02_tmpdata3/osum_s2s/S2SChat_sex_yinshi_7_4_osum_by_cywang_added_by_20250708/raw_data/s2s_handle/xlgeng_new_data/s2s_thinking/sensevoice/combines_list.txt
-  tar_num: 3
-
-gender_yinshi_5k_sensevoice:
-  path: /home/A02_tmpdata3/osum_s2s/S2SChat_sex_yinshi_5000_6_13_data_by_gjli_added_by_20250622/raw_data/s2s_handle/xlgeng_new_data/s2s_thinking/sensevoice/combines_list.txt
-  tar_num: 6
-
-age_xianshi_sensevoice:
-  path: /home/A02_tmpdata3/osum_s2s/age_xianshi_cosyvoice2_by_cywang_added_by_20250625/raw_data/s2s_handle/xlgeng_new_data/s2s_thinking/sensevoice/combines_list.txt
-  tar_num: 25
-
-
-# caption
-caption_common_7label_sensevoice:
-  path: /home/A02_tmpdata3/osum_s2s/caption/raw_data/xlgeng_new_data/s2s_thinking/sensevoice/combines_list.txt
-  tar_num: 162
-
-caption_common_50_label_sensevoice:
-  path: /home/A02_tmpdata3/osum_s2s/caption_add_2025_1_6/raw_data/s2s_data_with_gender/xlgeng_new_data/s2s_thinking/sensevoice/combines_list.txt
-  tar_num: 395  # 实际是196k
-
-caption_xianshi_sensevoice:
-  path: /home/A02_tmpdata3/osum_s2s/caption_s2s_xianshi_20250806/raw_data/s2s_data/xlgeng_new_data/s2s_thinking/sensevoice/combines_list.txt
-  tar_num: 6
-  weight: 10
 
 
 # emotion
@@ -86,6 +57,11 @@ emotion_30K_sensevoice:
   tar_num: 33
   weight: 10
 
+S2SChat_osum_setting_qa_527_updated_by_cywang_added_by_20250616_think:
+  path: /home/A02_tmpdata3/osum_s2s/S2SChat_osum_setting_qa_527_updated_by_cywang_added_by_20250616/raw_data/s2s_handle/xlgeng_new_data/s2s_thinking/doubao/combines_list.txt
+  shard_num: 8
+  weight: 10
+
 # ======================================s2s 副语言 thinking end=====================================
 
 
@@ -95,76 +71,46 @@ emotion_30K_sensevoice:
 
 # age gender,
 age_gender_common_no_thinking:
-  path: /home/A02_tmpdata3/osum_s2s/gender/xlgeng_new_data/s2s_no_thinking/kokoro/combines_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/gender/xlgeng_new_data/s2s_no_thinking/doubao/combines_list.txt
   tar_num: 1511
+  weight: 2
 
 gender_xianshi_no_thinking:
-  path: /home/A02_tmpdata3/osum_s2s/sex_xianshi_cosyvoice2_by_cywang_added_by_20250625/raw_data/s2s_handle/xlgeng_new_data/s2s_no_thinking/kokoro/combines_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/sex_xianshi_cosyvoice2_by_cywang_added_by_20250625/raw_data/s2s_handle/xlgeng_new_data/s2s_no_thinking/doubao/combines_list.txt
   tar_num: 30
+  weight: 2
 
 gender_yinshi_3k_no_thinking:
-  path: /home/A02_tmpdata3/osum_s2s/S2SChat_sex_yinshi_7_4_osum_by_cywang_added_by_20250708/raw_data/s2s_handle/xlgeng_new_data/s2s_no_thinking/kokoro/combines_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/S2SChat_sex_yinshi_7_4_osum_by_cywang_added_by_20250708/raw_data/s2s_handle/xlgeng_new_data/s2s_no_thinking/doubao/combines_list.txt
   tar_num: 3
+  weight: 2
 
 gender_yinshi_5k_no_thinking:
-  path: /home/A02_tmpdata3/osum_s2s/S2SChat_sex_yinshi_5000_6_13_data_by_gjli_added_by_20250622/raw_data/s2s_handle/xlgeng_new_data/s2s_no_thinking/kokoro/combines_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/S2SChat_sex_yinshi_5000_6_13_data_by_gjli_added_by_20250622/raw_data/s2s_handle/xlgeng_new_data/s2s_no_thinking/doubao/combines_list.txt
   tar_num: 6
+  weight: 2
 
 age_xianshi_no_thinking:
-  path: /home/A02_tmpdata3/osum_s2s/age_xianshi_cosyvoice2_by_cywang_added_by_20250625/raw_data/s2s_handle/xlgeng_new_data/s2s_no_thinking/kokoro/combines_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/age_xianshi_cosyvoice2_by_cywang_added_by_20250625/raw_data/s2s_handle/xlgeng_new_data/s2s_no_thinking/doubao/combines_list.txt
   tar_num: 25
+  weight: 2
 
 
 # caption
 caption_common_7label_no_thinking:
-  path: /home/A02_tmpdata3/osum_s2s/caption/raw_data/xlgeng_new_data/s2s_no_thinking/kokoro/combines_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/caption/raw_data/xlgeng_new_data/s2s_no_thinking/doubao/combines_list.txt
   tar_num: 162
+  weight: 2
 
 caption_common_50_label_no_thinking:
-  path: /home/A02_tmpdata3/osum_s2s/caption_add_2025_1_6/raw_data/s2s_data_with_gender/xlgeng_new_data/s2s_no_thinking/kokoro/combines_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/caption_add_2025_1_6/raw_data/s2s_data_with_gender/xlgeng_new_data/s2s_no_thinking/doubao/combines_list.txt
   tar_num: 395  # 实际是196k
+  weight: 2
 
 caption_xianshi_no_thinking:
-  path: /home/A02_tmpdata3/osum_s2s/caption_s2s_xianshi_20250806/raw_data/s2s_data/xlgeng_new_data/s2s_no_thinking/kokoro/combines_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/caption_s2s_xianshi_20250806/raw_data/s2s_data/xlgeng_new_data/s2s_no_thinking/doubao/combines_list.txt
   tar_num: 6
-
-
-#---------------------------sensevoice-------------
-# age gender,
-age_gender_common_sensevoice_no_thinking:
-  path: /home/A02_tmpdata3/osum_s2s/gender/xlgeng_new_data/s2s_no_thinking/sensevoice/combines_list.txt
-  tar_num: 1511
-
-gender_xianshi_sensevoice_no_thinking:
-  path: /home/A02_tmpdata3/osum_s2s/sex_xianshi_cosyvoice2_by_cywang_added_by_20250625/raw_data/s2s_handle/xlgeng_new_data/s2s_no_thinking/sensevoice/combines_list.txt
-  tar_num: 30
-
-gender_yinshi_3k_sensevoice_no_thinking:
-  path: /home/A02_tmpdata3/osum_s2s/S2SChat_sex_yinshi_7_4_osum_by_cywang_added_by_20250708/raw_data/s2s_handle/xlgeng_new_data/s2s_no_thinking/sensevoice/combines_list.txt
-  tar_num: 3
-
-gender_yinshi_5k_sensevoice_no_thinking:
-  path: /home/A02_tmpdata3/osum_s2s/S2SChat_sex_yinshi_5000_6_13_data_by_gjli_added_by_20250622/raw_data/s2s_handle/xlgeng_new_data/s2s_no_thinking/sensevoice/combines_list.txt
-  tar_num: 6
-
-age_xianshi_sensevoice_no_thinking:
-  path: /home/A02_tmpdata3/osum_s2s/age_xianshi_cosyvoice2_by_cywang_added_by_20250625/raw_data/s2s_handle/xlgeng_new_data/s2s_no_thinking/sensevoice/combines_list.txt
-  tar_num: 25
-
-
-# caption
-caption_common_7label_sensevoice_no_thinking:
-  path: /home/A02_tmpdata3/osum_s2s/caption/raw_data/xlgeng_new_data/s2s_no_thinking/sensevoice/combines_list.txt
-  tar_num: 162
-
-caption_common_50_label_sensevoice_no_thinking:
-  path: /home/A02_tmpdata3/osum_s2s/caption_add_2025_1_6/raw_data/s2s_data_with_gender/xlgeng_new_data/s2s_no_thinking/sensevoice/combines_list.txt
-  tar_num: 395  # 实际是196k
-
-caption_xianshi_sensevoice_no_thinking:
-  path: /home/A02_tmpdata3/osum_s2s/caption_s2s_xianshi_20250806/raw_data/s2s_data/xlgeng_new_data/s2s_no_thinking/sensevoice/combines_list.txt
-  tar_num: 6
-  weight: 10
+  weight: 2
 
 
 # emotion
@@ -178,6 +124,12 @@ emotion_30K_sensevoice_no_thinking:
   tar_num: 33
   weight: 10
 
+S2SChat_osum_setting_qa_527_updated_by_cywang_added_by_20250616:
+  path: /home/A02_tmpdata3/osum_s2s/S2SChat_osum_setting_qa_527_updated_by_cywang_added_by_20250616/raw_data/s2s_handle/xlgeng_new_data/s2s_no_thinking/doubao/combines_list.txt
+  shard_num: 8
+  weight: 10
+
+# -------------------------------------------s2s 副语言 no thinking end-------------------------------------------
 
 S2SChat_syndata_merged_by_300W_zhguo_added_by_20250616:
   path: /home/A02_tmpdata3/osum_s2s/S2SChat_syndata_merged_by_300W_zhguo_added_by_20250616/combines_data_s2s/combines_list.txt
@@ -193,17 +145,65 @@ gaozhiliang_gbma:
   new_data_list: /home/node44_tmpdata3/netease/gbma/workspace/osum/data/process/0803/all_data_info.jsonl
   new_lab_path: /home/work_nfs23/asr_data/data/osum_chat/s2s/gaozhiliang_gbma/shards_list.txt
   shard_num: 24
-  weight: 10
+  weight: 1
 
-# ======================================s2s 副语言  no thinking end=====================================
+# ======================================s2s  no thinking end=====================================
 
 
+S2SChat_0630_trans_en2zh_by_cywang_added_by_20250704:
+  huawei_path: /mnt/sfs/asr/update_data/S2SChat_0630_trans_en2zh_by_cywang_added_by_20250704/shards_list.txt
+  new_data_list: /home/work_nfs16/cywang/workspace/OSUM/trans_emotion/0630_trans_en2zh.jsonl
+  new_lab_path: /home/work_nfs11/cywang/data/shard/S2Chat/0630_trans_en2zh/shards_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/S2SChat_0630_trans_en2zh_by_cywang_added_by_20250704/shards_list.txt
+  shard_num: 128
+  weight: 0.5
+S2SChat_0630_trans_zh2en_by_cywang_added_by_20250704:
+  huawei_path: /mnt/sfs/asr/update_data/S2SChat_0630_trans_zh2en_by_cywang_added_by_20250704/shards_list.txt
+  new_data_list: /home/work_nfs16/cywang/workspace/OSUM/trans_emotion/0630_trans_zh2en.jsonl
+  new_lab_path: /home/work_nfs11/cywang/data/shard/S2Chat/0630_trans_zh2en/shards_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/S2SChat_0630_trans_zh2en_by_cywang_added_by_20250704/shards_list.txt
+  shard_num: 128
+  weight: 0.5
+S2SChat_pachong_part1_filter_author_data_by_gjli_added_by_20250622:
+  shard_num: 28
+  huawei_path: /mnt/sfs/asr/update_data/S2SChat_pachong_part1_filter_author_data_by_gjli_added_by_20250622/shards_list.txt
+  new_data_list: /home/work_nfs16/gjli/workspaces/poem/6-16_shigepachong/pachong_part1_filter_content_data.list
+  new_lab_path: /home/work_nfs11/cywang/data/shard/S2Chat/pachong_part1_filter_author_data/shards_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/S2SChat_pachong_part1_filter_author_data_by_gjli_added_by_20250622/shards_list.txt
+  weight: 1
+S2SChat_pachong_part1_filter_content_data_by_gjli_added_by_20250622:
+  huawei_path: /mnt/sfs/asr/update_data/S2SChat_pachong_part1_filter_content_data_by_gjli_added_by_20250622/shards_list.txt
+  new_data_list: /home/work_nfs16/gjli/workspaces/poem/6-16_shigepachong/pachong_part1_filter_author_data.list
+  new_lab_path: /home/work_nfs11/cywang/data/shard/S2Chat/pachong_part1_filter_content_data/shards_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/S2SChat_pachong_part1_filter_content_data_by_gjli_added_by_20250622/shards_list.txt
+  shard_num: 68
+  weight: 1
+S2SChat_poem_1_2_6_3_author_data_150num_by_gjli_added_by_20250622:
+  huawei_path: /mnt/sfs/asr/update_data/S2SChat_poem_1_2_6_3_author_data_150num_by_gjli_added_by_20250622/shards_list.txt
+  new_data_list: /home/work_nfs16/gjli/workspaces/poem/6.3/poem_1_2_6-3_author_data.list
+  new_lab_path: /home/work_nfs11/cywang/data/shard/S2Chat/poem_1_2_6-3_author_data/shards_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/S2SChat_poem_1_2_6_3_author_data_150num_by_gjli_added_by_20250622/shards_list.txt
+  shard_num: 2
+  weight: 1
+S2SChat_poem_1_2_6_3_content_data_150num_by_gjli_added_by_20250622:
+  huawei_path: /mnt/sfs/asr/update_data/S2SChat_poem_1_2_6_3_content_data_150num_by_gjli_added_by_20250622/shards_list.txt
+  new_data_list: /home/work_nfs16/gjli/workspaces/poem/6.3/poem_1_2_6-3_content_data.list
+  new_lab_path: /home/work_nfs11/cywang/data/shard/S2Chat/poem_1_2_6-3_content_data/shards_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/S2SChat_poem_1_2_6_3_content_data_150num_by_gjli_added_by_20250622/shards_list.txt
+  shard_num: 9
+  weight: 1
+S2SChat_poem_500_author_data_new_by_gjli_added_by_20250622:
+  huawei_path: /mnt/sfs/asr/update_data/S2SChat_poem_500_author_data_new_by_gjli_added_by_20250622/shards_list.txt
+  new_data_list: /home/work_nfs16/gjli/workspaces/poem/poem_500_author_data_new.list
+  new_lab_path: /home/work_nfs11/cywang/data/shard/S2Chat/poem_500_author_data_new/shards_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/S2SChat_poem_500_author_data_new_by_gjli_added_by_20250622/shards_list.txt
+  shard_num: 4
+  weight: 1
+S2SChat_poem_500_content_data_new_by_gjli_added_by_20250622:
+  huawei_path: /mnt/sfs/asr/update_data/S2SChat_poem_500_content_data_new_by_gjli_added_by_20250622/shards_list.txt
+  new_data_list: /home/work_nfs16/gjli/workspaces/poem/poem_500_content_data_new.list
+  new_lab_path: /home/work_nfs11/cywang/data/shard/S2Chat/poem_500_content_data_new/shards_list.txt
+  path: /home/A02_tmpdata3/osum_s2s/S2SChat_poem_500_content_data_new_by_gjli_added_by_20250622/shards_list.txt
+  shard_num: 4
+  weight: 1
 
-S2SChat_osum_setting_qa_527_updated_by_cywang_added_by_20250616:
-  huawei_path: /mnt/sfs/asr/update_data/S2SChat_osum_setting_qa_527_updated_by_cywang_added_by_20250616/shards_list.txt
-  new_data_list: /home/work_nfs16/cywang/workspace/OSUM/osum_setting/updated/osum_setting_qa_527_updated.jsonl
-  new_lab_path: /home/work_nfs11/cywang/data/shard/S2Chat/osum_setting_qa_527_updated/shards_list.txt
-  path: /home/A02_tmpdata3/osum_s2s/S2SChat_osum_setting_qa_527_updated_by_cywang_added_by_20250616/shards_list.txt
-  shard_num: 8
-  description: "osum_setting_qa_527_updated, 自我介绍数据"
-  weight: 20
