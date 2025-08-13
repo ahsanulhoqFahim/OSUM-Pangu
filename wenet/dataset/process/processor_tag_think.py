@@ -707,6 +707,8 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
 
         if task_name in ['<S2TCHAT> <THINKER>', "<S2TCHAT> <TEXT2TOKEN> <THINK>", "<S2TCHAT>", "<S2TCHAT> <TEXT2TOKEN>"]:
             emotion_tag, txt = process_tagged_string(txt)  # 如果开头没<中立>，则加上<中立>
+        else:
+            emotion_tag = "<中立>"
         # =======================处理s2t think========================================
         if task_name == "<S2TCHAT> <THINKER>":
             q_txt = final_extra.get("q_txt", None)
@@ -732,9 +734,8 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
 
             if emotion_tag not in new_answer_emotion_tags or emotion_tag == "<中立>":
                 old_emotion_tag = emotion_tag
-                emotion_tag = unk_tag if is_unk else "<中立>"
-                if is_unk:
-                    txt = txt.replace(old_emotion_tag, emotion_tag)
+                emotion_tag ="<中立>"
+                txt = txt.replace(old_emotion_tag, emotion_tag)
 
             if age_tag is not None:
                 if not age_tag.startswith("<") and not age_tag.endswith(">"):

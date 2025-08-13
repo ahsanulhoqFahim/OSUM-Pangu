@@ -15,7 +15,7 @@ export CPU_AFFINITY_CONF=1 # 绑核
 export TASK_QUEUE_ENABLE=2 # 优化下发队列
 # You can also manually specify CUDA_VISIBLE_DEVICES
 # if you don't want to utilize all available GPU resources.
-export CUDA_VISIBLE_DEVICES="0,1,2,3,4,5,6,7"
+export CUDA_VISIBLE_DEVICES="0,1,2,3,4,5,6"
 #export CUDA_VISIBLE_DEVICES="2"
 echo "CUDA_VISIBLE_DEVICES is ${CUDA_VISIBLE_DEVICES}"
 export PYTHONPATH=./
@@ -60,7 +60,8 @@ dir=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t_s2s_tag_
 #checkpoint=/home/A02_tmpdata3/ckpt/osum_chat/epoch1_all_data/step_5633.pt
 #checkpoint=/home/A02_tmpdata3/ckpt/osum_chat/epoch2_all_data/step_4999.pt
 #checkpoint=/home/A02_tmpdata3/ckpt/osum_chat/epoch2_all_data/step_13749.pt
-checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t_s2s_tag_think/step_7499.pt
+#checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t_s2s_tag_think/step_7499.pt
+checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t_s2s_tag_think/step_17499.pt
 
 mkdir -p $dir
 data=$dir/data
