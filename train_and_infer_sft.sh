@@ -31,6 +31,7 @@ fi
 # shellcheck disable=SC2145
 echo "Parsed device_ids: ${device_ids[@]}"
 
+
 stage=0
 stop_stage=0
 
