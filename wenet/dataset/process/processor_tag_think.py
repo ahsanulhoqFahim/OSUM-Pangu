@@ -594,7 +594,8 @@ emotion_tags = {"<HAPPY>", "<SAD>", "<ANGRY>", "<ANGER>", "<FEAR>", "<DISGUST>",
 answer_emotion_tags = {"<ANGER>", "<FEAR>", "<HAPPY>", "<SURPRISE>", "<SAD>", "<DISGUST>", "<CONFUSED>", "<SARCASM>",
                        "<EMBARRASSED>", "<CURIOUS>", "<WORRIED>", "<SHY>", "<SORRY>", "<NEUTRAL>", }
 new_answer_emotion_tags = {
-"愉悦" ,"抱歉", "开心" ,"愤怒" , "惊讶" ,"厌恶" ,"悲伤", "害怕", "哭腔" ,"安慰鼓励" ,"中立"
+"愉悦" ,"抱歉", "开心" ,"愤怒" , "惊讶" ,"厌恶" ,"悲伤", "害怕", "哭腔" ,"安慰鼓励" ,"中立",
+"<愉悦>" ,"<抱歉>", "<开心>" ,"<愤怒>" , "<惊讶>" ,"<厌恶>" ,"<悲伤>", "<害怕>", "<哭腔>" ,"<安慰鼓励>" ,"<中立>"
 }
 age_tags = {"<CHILD>", "<ADULT>", "<OLD>"}
 gender_tags = {"<MALE>", "<FEMALE>"}
@@ -721,7 +722,7 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
             gender_tag = final_extra.get("gender", None)
             caption_tag = final_extra.get("caption", None)
             q_emotion_tag = final_extra.get("q_emotion", None)
-            unk_rate = 0.95
+            unk_rate = 0.85
             if random.random() < unk_rate:
                 is_unk = True
             else:
@@ -754,7 +755,7 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
                 caption_tag = unk_tag if is_unk else "<OTHER>"
             think_txt = f"<think>用户说的话是:{q_txt},年龄为:{age_tag},性别为:{gender_tag},情感为:{q_emotion_tag},声音事件为:{caption_tag},推测使用的回复情感为:{emotion_tag},我应该综合用户的语义和副语言信息给出专业且对应的回答<think end>"
             txt = f"{think_txt}{txt}"
-            if random.random() < 0.01:
+            if random.random() < 0.4:
                 utils_file.logging_warning(f"s2t think txt: {txt}")
         # =======================处理s2t think end=====================================
 
@@ -771,7 +772,7 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
             gender_tag = final_extra.get("gender", None)
             caption_tag = final_extra.get("caption", None)
             q_emotion_tag = final_extra.get("q_emotion", None)
-            unk_rate = 0.95
+            unk_rate = 0.85
             if random.random() < unk_rate:
                 is_unk = True
             else:
@@ -782,11 +783,10 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
             else:
                 q_emotion_tag = unk_tag if is_unk else "<NEUTRAL>"
 
-            if emotion_tag not in answer_emotion_tags or emotion_tag == "<NEUTRAL>":
+            if emotion_tag not in new_answer_emotion_tags or emotion_tag == "<中立>":
                 old_emotion_tag = emotion_tag
-                emotion_tag = unk_tag if is_unk else "<NEUTRAL>"
-                if is_unk:
-                    txt = txt.replace(old_emotion_tag, emotion_tag)
+                emotion_tag = "<中立>"
+                txt = txt.replace(old_emotion_tag, emotion_tag)
 
             if age_tag is not None:
                 if not age_tag.startswith("<") and not age_tag.endswith(">"):
@@ -805,7 +805,7 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
                 caption_tag = unk_tag if is_unk else "<OTHER>"
             think_txt = f"<think>用户说的话是:{q_txt},年龄为:{age_tag},性别为:{gender_tag},情感为:{q_emotion_tag},声音事件为:{caption_tag},推测使用的回复情感为:{emotion_tag},我应该综合用户的语义和副语言信息给出专业且对应的回答<think end>"
             txt = f"{think_txt}{txt}"
-            if random.random() < 0.01:
+            if random.random() < 0.4:
                 utils_file.logging_warning(f"s2t think txt: {txt}")
         # ====================处理s2s think end============================================
 
