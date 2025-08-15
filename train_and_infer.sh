@@ -62,7 +62,7 @@ dir=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch2_s2t_t2s_t2t_s2s_hq_l
 # checkpoint=/home/A02_tmpdata3/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t/step_1249.pt
 #checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t_s2s_language_think/step_6249.pt
 #checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t_s2s_language_think/step_22499.pt
-checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch1_s2t_t2s_t2t_s2s_language_think/step_24999.pt
+checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch1_s2t_t2s_t2t_s2s_hq_language_think/step_24999.pt
 
 
 

@@ -63,7 +63,7 @@ dir=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch2_s2t_t2s_t2t_s2s_hq_t
 #checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t_s2s_tag_think/step_7499.pt
 #checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t_s2s_tag_think/step_17499.pt
 #checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t_s2s_tag_think/step_19999.pt
-checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t_s2s_tag_think/step_24999.pt
+checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t_s2s_hq_tag_think/step_24999.pt
 
 mkdir -p $dir
 data=$dir/data
