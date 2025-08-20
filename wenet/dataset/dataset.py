@@ -266,7 +266,7 @@ def get_dataset(data_type,
     # prompt dict
     from gxl_ai_utils.utils import utils_file
     other_tokenze_conf = conf.get('other_tokenze_conf', {})
-    global_prompt_dict = utils_file.load_dict_from_yaml(conf.get('prompt_conf_path', "conf/promp,t_config.yaml"))
+    global_prompt_dict = utils_file.load_dict_from_yaml(conf.get('prompt_conf_path', "conf/prompt_config.yaml"))
     speech_token_num = conf.get('speech_token_num', 1)
     dataset = Processor(dataset, processor.tokenize, tokenizer, other_tokenze_conf=other_tokenze_conf,
                         global_prompt_dict=global_prompt_dict, speech_token_num=speech_token_num)

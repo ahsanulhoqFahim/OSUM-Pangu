@@ -49,10 +49,21 @@ gxl_data_json_info_path_t2s=conf/data_t2s.yaml
 gxl_data_json_info_path_s2s=conf/data_s2s.yaml
 gxl_data_json_info_path_t2t=conf/data_t2t.yaml
 
-# epoch0 是
+# 自然语言think的训练数据
+# epoch0 是 使用kokoro数据训练的，在内容层面先用kokoro数据训练出效果，先不管音质。
+# epoch1 是 用豆包tts数据训练的，非常明显得提升了音质。
+# epoch2 是 在豆包tts数据训练后，发现了一个问题， 波浪号没有停顿， 重新构造了数据，继续训练epoch2. 训练到了8749stap.
+# epoch3 ，是真正的第三轮， 高质量数据的第二轮，在epoch2结束的时候，发现了模型only X 的结果有问题， 正好启动epoch3并修复bug
+# epoch4 ，上一轮报了share memory out错误。
+# --------------------
+# tag think的训练数据
+# epoch0 是 使用kokoro数据训练的，在内容层面先用kokoro数据训练出效果，先不管音质。
+# epoch1 是 用豆包tts数据训练的，非常明显得提升了音质。
+# epoch2 是 在豆包tts数据训练后，发现了一个问题， 波浪号没有停顿， 重新构造了数据，继续训练epoch2. 训练到了8749stap. ,持续训练到现在，作为第三轮。期间有个返工，不小心用成了language think的process.py了。
+
 
 # dir=$exp_path/qwen2_multi_task_4_6gpus_gxl_adapter/epoch_12_13_with_speech_gxl_with_asr-chat
-dir=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch3_s2t_t2s_t2t_s2s_hq_language_think
+dir=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch4_s2t_t2s_t2t_s2s_hq_language_think
 #checkpoint=/home/A02_tmpdata3/ckpt/osum_chat/epoch0_all_data/step_10624.pt
 #checkpoint=/home/A02_tmpdata3/ckpt/osum_chat/epoch0_all_data/step_14374.pt
 #checkpoint=/home/A02_tmpdata3/ckpt/osum_chat/epoch1_all_data/step_2816.pt
@@ -63,8 +74,9 @@ dir=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch3_s2t_t2s_t2t_s2s_hq_l
 #checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t_s2s_language_think/step_6249.pt
 #checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch0_s2t_t2s_t2t_s2s_language_think/step_22499.pt
 #checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch1_s2t_t2s_t2t_s2s_hq_language_think/step_24999.pt
-checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch2_s2t_t2s_t2t_s2s_hq_language_think/step_8749.pt
-
+#checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch2_s2t_t2s_t2t_s2s_hq_language_think/step_8749.pt
+checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch3_s2t_t2s_t2t_s2s_hq_language_think/step_27499.pt
+checkpoint=/home/A02_tmpdata2/ckpt/osum_chat_new_start_0810/epoch4_s2t_t2s_t2t_s2s_hq_language_think/step_23749.pt
 
 mkdir -p $dir
 data=$dir/data
