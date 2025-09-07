@@ -45,9 +45,9 @@ num_nodes=1
 job_id=2023
 
 train_config=conf/ct_config_sft.yaml
-gxl_data_json_info_path_s2t=conf/data_s2s_tmp.yaml
+gxl_data_json_info_path_s2t=conf/empty.yaml
 gxl_data_json_info_path_t2s=conf/empty.yaml
-gxl_data_json_info_path_s2s=conf/data_tmp.yaml
+gxl_data_json_info_path_s2s=conf/data_s2s_tmp.yaml
 gxl_data_json_info_path_t2t=conf/empty.yaml
 
 
