@@ -43,16 +43,16 @@ HOST_PORT=29401
 num_nodes=1
 job_id=2023
 
-train_config=conf/ct_config.yaml
+train_config=conf/ct_config_contextasr.yaml
 #gxl_data_json_info_path_s2t=conf/empty.yaml
 #gxl_data_json_info_path_t2s=conf/empty.yaml
 #gxl_data_json_info_path_s2s=conf/data_s2s_tmp.yaml
 #gxl_data_json_info_path_t2t=conf/empty.yaml
 # ---------------------------------
 
-gxl_data_json_info_path_s2t=conf/data_s2t.yaml
-gxl_data_json_info_path_t2s=conf/data_t2s.yaml
-gxl_data_json_info_path_s2s=conf/data_s2s.yaml
+gxl_data_json_info_path_s2t=conf/data_s2t_contextasr.yaml
+gxl_data_json_info_path_t2s=conf/empty.yaml
+gxl_data_json_info_path_s2s=conf/empty.yaml
 gxl_data_json_info_path_t2t=conf/data_t2t.yaml
 
 # 自然语言think的训练数据
@@ -70,7 +70,7 @@ gxl_data_json_info_path_t2t=conf/data_t2t.yaml
 
 
 # dir=$exp_path/qwen2_multi_task_4_6gpus_gxl_adapter/epoch_12_13_with_speech_gxl_with_asr-chat
-dir=/home/A02_tmpdata1/ckpt/osum_chat_new_start_0810/epoch6_add_emotion_raw_in_no_think_hq_language_think
+dir=/home/A02_tmpdata1/ckpt/context_asr_full/epoch0_all_task
 #checkpoint=/home/A02_tmpdata3/ckpt/osum_chat/epoch0_all_data/step_10624.pt
 #checkpoint=/home/A02_tmpdata3/ckpt/osum_chat/epoch0_all_data/step_14374.pt
 #checkpoint=/home/A02_tmpdata3/ckpt/osum_chat/epoch1_all_data/step_2816.pt
