@@ -15,7 +15,7 @@ export CPU_AFFINITY_CONF=1 # 绑核
 export TASK_QUEUE_ENABLE=2 # 优化下发队列
 # You can also manually specify CUDA_VISIBLE_DEVICES
 # if you don't want to utilize all available GPU resources.
-export CUDA_VISIBLE_DEVICES="7"
+export CUDA_VISIBLE_DEVICES="0,1,2,3,4,5,6,7"
 #export CUDA_VISIBLE_DEVICES="2"
 echo "CUDA_VISIBLE_DEVICES is ${CUDA_VISIBLE_DEVICES}"
 export PYTHONPATH=./
@@ -45,15 +45,15 @@ num_nodes=1
 job_id=2023
 
 train_config=conf/ct_config.yaml
-gxl_data_json_info_path_s2t=conf/data_s2t_tmp.yaml
-gxl_data_json_info_path_t2s=conf/data_t2s_tmp.yaml
+gxl_data_json_info_path_s2t=conf/empty.yaml
+gxl_data_json_info_path_t2s=conf/empty.yaml
 gxl_data_json_info_path_s2s=conf/data_s2s_tmp.yaml
-gxl_data_json_info_path_t2t=conf/data_t2t_tmp.yaml
+gxl_data_json_info_path_t2t=conf/empty.yaml
 
-gxl_data_json_info_path_s2t=conf/data_s2t.yaml
-gxl_data_json_info_path_t2s=conf/data_t2s.yaml
-gxl_data_json_info_path_s2s=conf/data_s2s.yaml
-gxl_data_json_info_path_t2t=conf/data_t2t.yaml
+#gxl_data_json_info_path_s2t=conf/data_s2t.yaml
+#gxl_data_json_info_path_t2s=conf/data_t2s.yaml
+#gxl_data_json_info_path_s2s=conf/data_s2s.yaml
+#gxl_data_json_info_path_t2t=conf/data_t2t.yaml
 
 
 
