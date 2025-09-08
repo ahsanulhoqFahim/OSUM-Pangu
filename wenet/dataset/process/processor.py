@@ -728,13 +728,13 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
         # =======================处理s2t think end=====================================
 
         # ===================处理s2s think============================================
-        if task_name == "<S2TCHAT> <TEXT2TOKEN> <THINK>":
+        if task_name == "<S2TCHAT> <TEXT2TOKEN> <THINK>" or "<THINK>" in task_name:
             # emotion_tag, txt = process_tagged_string(txt)  # 如果开头没<中立>，则加上<中立>
             if 'think_str' in final_extra:
                 think_str = final_extra['think_str']
                 txt = f'<think>{think_str}<think end>{txt}'
                 if random.random() < 0.01:
-                    utils_file.logging_warning(f"s2s_think thinking txt: {txt}")
+                    utils_file.logging_warning(f"s2s_think thinking txt: {txt}, task: {task_name}")
             else:
                 utils_file.logging_error(f"error: think_str is not in extra, {sample}")
                 continue
