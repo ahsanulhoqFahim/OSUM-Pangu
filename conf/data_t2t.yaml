@@ -34,24 +34,24 @@ Alpaca_CoT_3000W_by_wjt_added_by_20250605:
   shard_num: 30000
   path_huawei: "/mnt/sfs/asr/update_data/Alpaca_CoT_3000W_by_wjt_added_by_20250605/shards_list.txt"
   path: "/home/A03_tmpdata1/text2text_data_xlgeng/Alpaca-CoT_3000W/shards_list.txt"
-  weight: 0.15
+  weight: 0.05
 
 
-qwenomni_bench_data:
-  path: "/home/A02_tmpdata3/osum_t2t/qwenomni_bench_data/shards_list.txt"
-  weight: 3
-
-three_kingdoms:
-  path: "/home/A02_tmpdata3/osum_t2t/three_kingdoms/shards_list.txt"
-  weight: 3
-
-voicebench_data:
-  path: "/home/A02_tmpdata3/osum_t2t/voicebench_data/shards_list.txt"
-  weight: 3
-
-t2t_osum_self_instruction_8K:
-  path: "/home/A02_tmpdata3/osum_t2t/t2t_osum_self_instruction_8K/shards_list.txt"
-  weight: 3
+#qwenomni_bench_data:
+#  path: "/home/A02_tmpdata3/osum_t2t/qwenomni_bench_data/shards_list.txt"
+#  weight: 3
+#
+#three_kingdoms:
+#  path: "/home/A02_tmpdata3/osum_t2t/three_kingdoms/shards_list.txt"
+#  weight: 3
+#
+#voicebench_data:
+#  path: "/home/A02_tmpdata3/osum_t2t/voicebench_data/shards_list.txt"
+#  weight: 3
+#
+#t2t_osum_self_instruction_8K:
+#  path: "/home/A02_tmpdata3/osum_t2t/t2t_osum_self_instruction_8K/shards_list.txt"
+#  weight: 3
 
 
 #t2t_osum_self_instruction_8K_by_xlgeng_added_by_20250529:
