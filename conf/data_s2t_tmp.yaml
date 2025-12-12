@@ -153,27 +153,27 @@
 
 
 # 语音理解==========================================
-asr:
-  huawei_path: "/mnt/sfs/asr/asr/shards_list.txt" # 2.4
-  lab_path: "/home/node54_tmpdata/xlgeng/asr_data_2w/shards_list.txt"
-  path: "/home/A03_tmpdata1/s2s/asr_data_2.4w/asr_data_2w/shards_list.txt"
-  shard_num: 15477
-  weight: 0.05  # ~10000h
-
-
-# ===========理解任务 ==============================================
-librispeech:
-  huawei_path: "/mnt/sfs/asr/update_data/LibriSpeech_shard_common/shards_list.txt" #1000h
-  lab_path: "/home/work_nfs15/asr_data/data/LibriSpeech/LibriSpeech_shard_common/shards_list.txt"
-  path: "/home/A03_tmpdata3/asr_data/librispeech/shards_list.txt"
-  shard_num: 282
-  weight: 1
-mix_asru200_add_2025_2_14:
-  huawei_path: "/mnt/sfs/asr/update_data/mix_asru200_add_2025_2_14/shards_list.txt" # 200
-  path: "/home/A03_tmpdata1/s2s/asru700/train/shards_list.txt"
-  lab_path: "/home/work_nfs15/asr_data/data/ASRU700/train/shards_list.txt" # 中英混单词之间是有空格的
-  shard_num: 187
-  weight: 1
+#asr:
+#  huawei_path: "/mnt/sfs/asr/asr/shards_list.txt" # 2.4
+#  lab_path: "/home/node54_tmpdata/xlgeng/asr_data_2w/shards_list.txt"
+#  path: "/home/A03_tmpdata1/s2s/asr_data_2.4w/asr_data_2w/shards_list.txt"
+#  shard_num: 15477
+#  weight: 0.05  # ~10000h
+#
+#
+## ===========理解任务 ==============================================
+#librispeech:
+#  huawei_path: "/mnt/sfs/asr/update_data/LibriSpeech_shard_common/shards_list.txt" #1000h
+#  lab_path: "/home/work_nfs15/asr_data/data/LibriSpeech/LibriSpeech_shard_common/shards_list.txt"
+#  path: "/home/A03_tmpdata3/asr_data/librispeech/shards_list.txt"
+#  shard_num: 282
+#  weight: 1
+#mix_asru200_add_2025_2_14:
+#  huawei_path: "/mnt/sfs/asr/update_data/mix_asru200_add_2025_2_14/shards_list.txt" # 200
+#  path: "/home/A03_tmpdata1/s2s/asru700/train/shards_list.txt"
+#  lab_path: "/home/work_nfs15/asr_data/data/ASRU700/train/shards_list.txt" # 中英混单词之间是有空格的
+#  shard_num: 187
+#  weight: 1
 
 
 #
@@ -426,3 +426,7 @@ mix_asru200_add_2025_2_14:
 #  huawei_path: "/mnt/sfs/asr/update_data/S2SChat_MMAU_training_all_by_wjtian_added_by_20250708/shards_list.txt" # 1000 tar
 #  shard_num: 22
 #  weight: 5
+
+aishell2:
+  path: "/mnt/apdcephfs_sgfd/share_304127040/Tealab/user/xuelonggeng/data/aishell2_shard/shards_list.txt"
+  weight: 20

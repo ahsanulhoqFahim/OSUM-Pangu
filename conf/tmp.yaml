@@ -1,0 +1,46 @@
+#  ===========================副语言 s2s thinking ===================================
+
+# age gender,
+age_gender_common:
+  path: /home/A02_tmpdata3/osum_s2s/gender/xlgeng_new_data/s2s_thinking/doubao/combines_list.txt
+  tar_num: 1511
+  weight: 2
+
+
+age_gender_xianshi4gender:
+  path: /home/A02_tmpdata3/osum_s2s/sex_xianshi_cosyvoice2_by_cywang_added_by_20250625/raw_data/s2s_handle/xlgeng_new_data/s2s_thinking/doubao/combines_list.txt
+  tar_num: 30
+  weight: 2
+
+
+age_gender_yinshi_3k:
+  path: /home/A02_tmpdata3/osum_s2s/S2SChat_sex_yinshi_7_4_osum_by_cywang_added_by_20250708/raw_data/s2s_handle/xlgeng_new_data/s2s_thinking/doubao/combines_list.txt
+  tar_num: 3
+  weight: 2
+
+age_gender_yinshi_5k:
+  path: /home/A02_tmpdata3/osum_s2s/S2SChat_sex_yinshi_5000_6_13_data_by_gjli_added_by_20250622/raw_data/s2s_handle/xlgeng_new_data/s2s_thinking/doubao/combines_list.txt
+  tar_num: 6
+  weight: 2
+
+age_gender_xianshi4age:
+  path: /home/A02_tmpdata3/osum_s2s/age_xianshi_cosyvoice2_by_cywang_added_by_20250625/raw_data/s2s_handle/xlgeng_new_data/s2s_thinking/doubao/combines_list.txt
+  tar_num: 25
+  weight: 2
+
+
+# caption
+caption_common_7label:
+  path: /home/A02_tmpdata3/osum_s2s/caption/raw_data/xlgeng_new_data/s2s_thinking/doubao/combines_list.txt
+  tar_num: 162
+  weight: 2
+
+caption_common_50_label:
+  path: /home/A02_tmpdata3/osum_s2s/caption_add_2025_1_6/raw_data/s2s_data_with_gender/xlgeng_new_data/s2s_thinking/doubao/combines_list.txt
+  tar_num: 395  # 实际是196k
+  weight: 2
+
+caption_xianshi:
+  path: /home/A02_tmpdata3/osum_s2s/caption_s2s_xianshi_20250806/raw_data/s2s_data/xlgeng_new_data/s2s_thinking/doubao/combines_list.txt
+  tar_num: 6
+  weight: 10

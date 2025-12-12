@@ -90,9 +90,9 @@ def init_llmasr(args, configs, is_inference=False):
     # logging.info('OSUM-EChat：加载instruct LLM模型完毕')
 
     # logging.info(f'OSUM-EChat：init_llmasr()：开始加载encoder参数，仅仅为了消融2，一会马上删了该逻辑')
-    # encoder_path = "/home/A02_tmpdata3/ckpt/whisper_medium/wenet_whisper.pt"
-    # load_checkpoint(model, encoder_path)
-    # logging.info(f'OSUM-EChat：init_llmasr()：加载encoder参数完毕')
+    encoder_path = "/apdcephfs_qy3/share_976139/users/xuelonggeng/ckpt/osum_echat/only_encder_ckpt.pt"
+    load_checkpoint(model, encoder_path)
+    logging.info(f'OSUM-EChat：init_llmasr()：加载encoder参数完毕')
 
     logging.info('OSUM-EChat：开始选择性冻结模块')
     fire_module = configs.get("fire_module", None)

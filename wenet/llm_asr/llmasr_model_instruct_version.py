@@ -53,7 +53,7 @@ class LLMASR_Model(nn.Module):
                  lora=True, lora_alpha=32, lora_rank=8, lora_dropout=0.1,
                  is_inference=False,
                  downsample_rate=1,
-                 adapter_type='osum_echat2',
+                 adapter_type='osum_echat',
                  speech_token_num=0,
                  train_speech_out=False):
         """"""

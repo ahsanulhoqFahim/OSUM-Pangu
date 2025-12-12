@@ -25,7 +25,7 @@ speech_token_num: &token_num 4097 #4097
 
 
 # Configuration of parameters for training
-fire_module: link_and_encoder_and_lora  # link  encoder llm  link_and_encoder link_and_encoder_and_lora, llm需要配合use_lora为true
+fire_module: link_and_encoder  # link  encoder llm  link_and_encoder link_and_encoder_and_lora, llm需要配合use_lora为true
 
 # other config
 grad_clip: 5
