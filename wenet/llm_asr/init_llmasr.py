@@ -9,6 +9,7 @@ from wenet.utils.cmvn import load_cmvn
 
 from gxl_ai_utils.utils import utils_file
 
+
 def init_llmasr(args, configs, is_inference=False):
     llm_path = configs["llm_path"]
     lora = configs["use_lora"]
@@ -66,9 +67,10 @@ def init_llmasr(args, configs, is_inference=False):
     utils_file.print_model_size(model.speech_llama_proj)
     utils_file.logging_info(f'speech_head')
     utils_file.print_model_size(model.speech_head)
+    
 
     # logging.info(f'OSUM-EChat：init_llmasr()：开始加载encoder参数，仅仅为了消融2，一会马上删了该逻辑')
-    encoder_path = "/apdcephfs_qy3/share_976139/users/xuelonggeng/ckpt/osum_echat/only_encder_ckpt.pt"
+    encoder_path = "only_encder_ckpt.pt"
     load_checkpoint(model, encoder_path)
     logging.info(f'OSUM-EChat：init_llmasr()：加载encoder参数完毕')
 
@@ -124,5 +126,46 @@ def init_llmasr(args, configs, is_inference=False):
         logging.info(f"{k} {p.requires_grad} {p.shape} {p.dtype}")
     logging.info('OSUM-EChat：冻结完毕')
     logging.info(configs)
-
+    logging.info(f"✅ 盘古7B模型已加载 = {configs['llm_path']}")
+    logging.basicConfig(level=logging.INFO, format='%(message)s')
+    # ========== 核心：打印NPU基础信息（极简版，鲁棒性优化） ==========
+    logging.info("\n===== NPU/设备基础信息 =====")
+    try:
+        import torch_npu
+        # 兼容假包/真实NPU环境，避免属性不存在报错
+        npu_available = getattr(torch_npu.npu, 'is_available', lambda: False)()
+        npu_count = getattr(torch_npu.npu, 'device_count', lambda: 0)()
+        logging.info(f"✅ torch_npu模块已加载")
+        logging.info(f"  - NPU是否可用: {npu_available} ")
+        logging.info(f"  - NPU设备数量: {npu_count}")
+        npu_version = getattr(torch_npu, '__version__', '假包（无真实版本）')
+        logging.info(f"✅ torch_npu 版本: {npu_version}")
+        logging.info("📌 获取NPU硬件信息:")
+        import subprocess
+        # logging.info("\n📌 npu-smi info 原始输出:")
+        #     # 确保捕获所有输出（包括stdout/stderr），超时兜底
+        # npu_smi_output = subprocess.check_output(
+        #         ["npu-smi", "info"], encoding="utf-8",stderr=subprocess.STDOUT,timeout=10  # 防止卡死
+        #     )
+        #     # 打印原始输出（按行拆分，更清晰）
+        # for idx, line in enumerate(npu_smi_output.split("\n")):
+        #     if line.strip():  # 只打印非空行
+        #         logging.info(f"{line.strip()}")
+        #         if idx >= 2:
+        #             break  # 只打印前几行，避免日志过长
+        logging.info("\n📌 torch_npu API获取的NPU属性:")
+        if npu_available:
+            for dev_id in range(min(npu_count, 1)):  # 只打印前1个设备，避免刷屏
+                try:
+                    props = torch_npu.npu.get_device_properties(dev_id)
+                    logging.info(f"✅ NPU设备{dev_id}属性: {props}")
+                except Exception as e:
+                    logging.info(f"  NPU设备{dev_id}属性获取失败: {e}")
+        else:
+            logging.info("  ❌ torch_npu API无法获取属性（NPU不可用）")
+        
+    except ImportError:
+        logging.info(f"❌ 未检测到torch_npu模块（无NPU环境）")
+    
+   
     return model, configs

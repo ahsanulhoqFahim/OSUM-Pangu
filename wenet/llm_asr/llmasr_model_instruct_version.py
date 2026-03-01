@@ -90,13 +90,13 @@ class LLMASR_Model(nn.Module):
             output_hidden_states=True,
             local_files_only=True # only for pangu
         )
-
+    
         self.max_length = 400
         self.min_length = 1
         self.num_beams = 4
-        self.do_sample = True
-        self.top_p = 0.9
-        self.top_k = 5
+        self.do_sample = False   #True
+        self.top_p = 1 #0.9
+        self.top_k = 1 #5
         self.repetition_penalty = 1.05
         self.length_penalty = 1.0
         self.temperature = 1.0
@@ -306,9 +306,12 @@ class LLMASR_Model(nn.Module):
         qwen_instruct_prompt_pattern_chat_s2s_think = "<|im_start|>system\nYou are OSUM-chat, a speech-to-speech dialogue assistant by ASLP Lab. You understand both the meaning and paralinguistic cues in speech. Before responding, first output your reasoning inside <think>...</think end>, analyzing the user’s words and vocal cues. Then generate a reply with appropriate text and emotionally matched synthetic speech.<|im_end|>\n"
         qwen_instruct_prompt_pattern_chat_s2s_streaming = "<|im_start|>system\nYou are OSUM-chat, a speech-to-speech dialogue assistant by ASLP Lab. You analyze speech (content + paralinguistic cues) and respond with interleaved text and emotionally-matched synthetic speech.<|im_end|>\n"
         qwen_instruct_prompt_pattern_chat_s2s_streaming_think = "<|im_start|>system\nYou are OSUM-chat, a speech-to-speech dialogue assistant by ASLP Lab. You analyze speech (both content and paralinguistic cues). Before responding, output your reasoning in <think>...</think end>. Then reply with interleaved text and emotionally matched synthetic speech.<|im_end|>\n"
-        qwen_instruct_prompt_pattern_chat_s2t = "<|im_start|>system\nYou are OSUM-chat, a speech-to-text dialogue assistant by ASLP Lab. You understand both the meaning and paralinguistic cues in speech then respond exclusively with appropriate text.<|im_end|>\n"
+        qwen_instruct_prompt_pattern_chat_s2t = "<|im_start|>system\nYou are OSUM-chat, a speech-to-text dialogue assistant by ASLP Lab. You understand both the meaning and paralinguistic cues in speech then respond exclusively with appropriate text.First perform intent recognition on the user's input and output the corresponding task tag, then execute the relevant task based on the tag.<|im_end|>\n"
         qwen_instruct_prompt_pattern__chat_t2t = "<|im_start|>system\nYou are OSUM-chat, a text-to-text dialogue assistant by ASLP Lab. You understand user input in text then respond exclusively with appropriate text.<|im_end|>\n"
-        qwen_instruct_prompt_pattern_1_understand = "<|im_start|>system\nYou are OSUM-chat, an audio understanding assistant by ASLP Lab. You can transcribe speech accurately and analyze paralinguistic cues to provide precise text responses.<|im_end|>\n"
+        qwen_instruct_prompt_pattern_chat_t2t_intent = "<|im_start|>system\nYou are OSUM-chat, a text-to-text dialogue assistant by ASLP Lab. You understand user input text and reply with corresponding user intent tags.<|im_end|>\n"
+        qwen_instruct_prompt_pattern_1_understand = "<|im_start|>system\nYou are OSUM-chat, an audio understanding assistant by ASLP Lab. You can transcribe speech accurately and analyze paralinguistic cues to provide precise text responses.First perform intent recognition on the user's input and output the corresponding task tag, then execute the relevant task based on the tag.<|im_end|>\n"
+        # qwen_instruct_prompt_pattern_1_understand = "<|im_start|>system\nYou are OSUM-chat, an audio understanding assistant by ASLP Lab. You can transcribe speech accurately and analyze paralinguistic cues to provide precise text responses.<|im_end|>\n"
+        
         qwen_instruct_prompt_pattern_1_tts = "<|im_start|>system\nYou are OSUM-chat, a speech synthesis assistant by ASLP Lab. You generate natural and fluent speech from text input.<|im_end|>\n"
         qwen_instruct_prompt_pattern_1_tts_streaming = "<|im_start|>system\nYou are OSUM-chat, a speech synthesis assistant by ASLP Lab. You generate natural speech from text input and output both audio and the original text in interleaved format.<|im_end|>\n"
         qwen_instruct_prompt_pattern_1_old = "<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n"
@@ -316,11 +319,11 @@ class LLMASR_Model(nn.Module):
         # user_start = "<|im_start|>user\n"
         # 赋予不同的系统提示。
         if output_type == "s2t_chat":
-            system_prompt = qwen_instruct_prompt_pattern_chat_s2t
+            system_prompt = qwen_instruct_prompt_pattern_chat_s2t #改了这个prompt
         elif output_type == "s2t_chat_fake":
             system_prompt = qwen_instruct_prompt_pattern_chat_s2s_think
         elif output_type == "text":
-            system_prompt = qwen_instruct_prompt_pattern_1_understand
+            system_prompt = qwen_instruct_prompt_pattern_1_understand #改了这个prompt
         elif output_type == "speech2text_token" or output_type == "speech2text_token_history":
             system_prompt = qwen_instruct_prompt_pattern_chat_s2s
         elif output_type == "text2token":
@@ -335,6 +338,8 @@ class LLMASR_Model(nn.Module):
             system_prompt = qwen_instruct_prompt_pattern__chat_t2t
         elif output_type == "s2t_chat_think":
             system_prompt = qwen_instruct_prompt_pattern_1_s2t_thinking
+        elif output_type == "intent_classification":
+            system_prompt = qwen_instruct_prompt_pattern_chat_t2t_intent
         else:
             system_prompt = qwen_instruct_prompt_pattern_1_old
         # if output_type == "speech2text_token_history":
@@ -609,7 +614,7 @@ class LLMASR_Model(nn.Module):
             inputs_embeds_list.extend([ speech_embeds, prompt_pattern2_embeds, labels_embeds])
             attention_mask_list.extend([speech_masks, prompt_pattern2_mask, labels_mask])
             target_list.extend([speech_target, prompt_pattern2_target, labels_target])
-        elif output_type == "text2text":
+        elif output_type == "text2text" or output_type == "intent_classification":
             labels = batch['target'].to(device)
             labels_lengths = batch['target_lengths'].to(device)
             labels_embeds, labels_target, labels_mask = self.get_label_embedding(labels, labels_lengths)
@@ -640,7 +645,7 @@ class LLMASR_Model(nn.Module):
         position_ids.masked_fill_(attention_mask == 0, 1)
         # utils_file.logging_limit_print(f'xxx final position_ids shape {position_ids.shape}')
         # utils_file.logging_limit_print(f'xxx final position_ids 0 {position_ids[0]}')
-        if output_type == 'text' or output_type == 's2t_chat' or output_type == "s2t_chat_fake" or output_type == "s2t_chat_think" or output_type == "text2text":
+        if output_type == 'text' or output_type == 's2t_chat' or output_type == "s2t_chat_fake" or output_type == "s2t_chat_think" or output_type == "text2text" or output_type == "intent_classification":
             outputs = self.llama_model(
                 inputs_embeds=inputs_embeds,
                 labels=target,
@@ -841,7 +846,7 @@ class LLMASR_Model(nn.Module):
         # qwen_instruct_prompt_pattern_1 = "<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\n"
         # # sft
         # qwen_instruct_prompt_pattern_1 = "<|im_start|>system\nYou are OSUM-chat, a dialogue. You understand both the meaning and paralinguistic cues in speech, as well as input text, and respond appropriately.<|im_end|>\n<|im_start|>user\n"
-        qwen_instruct_prompt_pattern_1 = "<|im_start|>system\nYou are OSUM-chat, an audio understanding. You can transcribe speech accurately and anaosum_echat2e paralinguistic cues to provide precise text responses.<|im_end|>\n<|im_start|>user\n"
+        qwen_instruct_prompt_pattern_1 = "<|im_start|>system\nYou are OSUM-chat, an audio understanding. You can transcribe speech accurately and anaosum_echat2e paralinguistic cues to provide precise text responses.First perform intent recognition on the user's input and output the corresponding task tag, then execute the relevant task based on the tag.<|im_end|>\n<|im_start|>user\n"
         prompt_pattern1 = self.tokenizer([qwen_instruct_prompt_pattern_1] * len(wavs_len), return_tensors="pt"
                                          )['input_ids'].to(speech_embeds.device)
         prompt_pattern1_embeds = self.embed_tokens(prompt_pattern1)
@@ -872,11 +877,15 @@ class LLMASR_Model(nn.Module):
             length_penalty=self.length_penalty,
             temperature=self.temperature,
             # attention_mask=atts,
-            eos_token_id=151645,
+            # eos_token_id=151645,
+            eos_token_id=45892,
             pad_token_id=-100,
             # stopping_criteria=self.max_token_criteria_list,
             # do_compile=True,
         )
+
+        # Todo
+        # 检测qwen的endtoken，做截断
         output_text = self.tokenizer.batch_decode(outputs, add_special_tokens=False, skip_special_tokens=True)
 
         return output_text
@@ -906,7 +915,7 @@ class LLMASR_Model(nn.Module):
 
         # qwen_instruct_prompt_pattern_1 = "<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\n"
         # # sft
-        qwen_instruct_prompt_pattern_1 = "<|im_start|>system\nYou are OSUM-chat, a speech-to-text dialogue. You understand both the meaning and paralinguistic cues in speech then respond exclusively with appropriate text.<|im_end|>\n<|im_start|>user\n"
+        qwen_instruct_prompt_pattern_1 = "<|im_start|>system\nYou are OSUM-chat, a speech-to-text dialogue. You understand both the meaning and paralinguistic cues in speech then respond exclusively with appropriate text.First perform intent recognition on the user's input and output the corresponding task tag, then execute the relevant task based on the tag.<|im_end|>\n<|im_start|>user\n"
         prompt_pattern1 = self.tokenizer([qwen_instruct_prompt_pattern_1] * len(wavs_len), return_tensors="pt"
                                          )['input_ids'].to(speech_embeds.device)
         prompt_pattern1_embeds = self.embed_tokens(prompt_pattern1)
@@ -920,6 +929,29 @@ class LLMASR_Model(nn.Module):
         atts = torch.ones(embeds.size()[:-1], dtype=torch.long).to(embeds.device)
 
         if self.embed_tokens.weight.dtype == torch.float16 or self.embed_tokens.weight.dtype == torch.bfloat16:
+        #     # utils_file.logging_limit_print('generate(): self.embed_tokens.weight.dtype == torch.float16')
+        #     # embeds = embeds.to(torch.float16)
+        #     embeds = embeds.to(torch.bfloat16)
+        #     atts = atts.to(torch.bfloat16)
+        # outputs = self.llama_model.generate(
+        #     inputs_embeds=embeds,
+        #     max_new_tokens=self.max_length,
+        #     # cache_implementation="static",
+        #     # num_beams=1,
+        #     do_sample=do_sample,
+        #     min_length=self.min_length,
+        #     top_p=top_p,
+        #     top_k=top_k,
+        #     repetition_penalty=self.repetition_penalty,
+        #     length_penalty=1,
+        #     temperature=temperature,
+        #     # attention_mask=atts,
+        #     eos_token_id=151645,
+        #     pad_token_id=-100,
+        #     do_compile=True,
+        #     stopping_criteria=self.max_token_criteria_list,
+        #旧版本，记得改
+
             # utils_file.logging_limit_print('generate(): self.embed_tokens.weight.dtype == torch.float16')
             # embeds = embeds.to(torch.float16)
             embeds = embeds.to(torch.bfloat16)
@@ -928,19 +960,20 @@ class LLMASR_Model(nn.Module):
             inputs_embeds=embeds,
             max_new_tokens=self.max_length,
             # cache_implementation="static",
-            # num_beams=1,
-            do_sample=do_sample,
+            # num_beams=self.num_beams,
+            do_sample=self.do_sample,
             min_length=self.min_length,
-            top_p=top_p,
-            top_k=top_k,
+            top_p=self.top_p,
+            top_k=self.top_k,
             repetition_penalty=self.repetition_penalty,
-            length_penalty=1,
-            temperature=temperature,
+            length_penalty=self.length_penalty,
+            temperature=self.temperature,
             # attention_mask=atts,
-            eos_token_id=151645,
+            # eos_token_id=151645,
+            eos_token_id=45892,
             pad_token_id=-100,
-            do_compile=True,
-            stopping_criteria=self.max_token_criteria_list,
+            # stopping_criteria=self.max_token_criteria_list,
+            # do_compile=True,
         )
 
         output_text = self.tokenizer.batch_decode(outputs, add_special_tokens=False, skip_special_tokens=True)
@@ -1486,7 +1519,7 @@ class LLMASR_Model(nn.Module):
         #                                                                1 + self.speech_token_num,
         #                                                                speech_embeds, speech_masks, speech_target)
 
-        qwen_instruct_prompt_pattern_1 = "<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\n"
+        qwen_instruct_prompt_pattern_1 = "<|im_start|>system\nYou are OSUM-chat, a text-to-text dialogue assistant by ASLP Lab. You understand user input text and reply with corresponding user intent tags.<|im_end|>\n"
         prompt_pattern1 = self.tokenizer([qwen_instruct_prompt_pattern_1] * len(speech_embeds), return_tensors="pt"
                                          )['input_ids'].to(speech_embeds.device)
         prompt_pattern1_embeds = self.embed_tokens(prompt_pattern1)
@@ -1499,6 +1532,25 @@ class LLMASR_Model(nn.Module):
         atts = torch.ones(embeds.size()[:-1], dtype=torch.long).to(embeds.device)
 
         if self.embed_tokens.weight.dtype == torch.float16 or self.embed_tokens.weight.dtype == torch.bfloat16:
+        #     # utils_file.logging_limit_print('generate(): self.embed_tokens.weight.dtype == torch.float16')
+        #     # embeds = embeds.to(torch.float16)
+        #     embeds = embeds.to(torch.bfloat16)
+        #     atts = atts.to(torch.bfloat16)
+        # outputs = self.llama_model.generate(
+        #     inputs_embeds=embeds,
+        #     max_new_tokens=self.max_length,
+        #     num_beams=self.num_beams,
+        #     do_sample=self.do_sample,
+        #     min_length=self.min_length,
+        #     top_p=self.top_p,
+        #     top_k=self.top_k,
+        #     repetition_penalty=1.2,
+        #     length_penalty=1.2,
+        #     temperature=self.temperature,
+        #     attention_mask=atts,
+        #     eos_token_id=self.eos_token_id,
+        #     pad_token_id=-100,
+
             # utils_file.logging_limit_print('generate(): self.embed_tokens.weight.dtype == torch.float16')
             # embeds = embeds.to(torch.float16)
             embeds = embeds.to(torch.bfloat16)
@@ -1506,17 +1558,21 @@ class LLMASR_Model(nn.Module):
         outputs = self.llama_model.generate(
             inputs_embeds=embeds,
             max_new_tokens=self.max_length,
-            num_beams=self.num_beams,
+            # cache_implementation="static",
+            # num_beams=self.num_beams,
             do_sample=self.do_sample,
             min_length=self.min_length,
             top_p=self.top_p,
             top_k=self.top_k,
-            repetition_penalty=1.2,
-            length_penalty=1.2,
+            repetition_penalty=self.repetition_penalty,
+            length_penalty=self.length_penalty,
             temperature=self.temperature,
-            attention_mask=atts,
-            eos_token_id=self.eos_token_id,
+            # attention_mask=atts,
+            # eos_token_id=151645,
+            eos_token_id=45892,
             pad_token_id=-100,
+            # stopping_criteria=self.max_token_criteria_list,
+            # do_compile=True,
         )
         output_text = self.tokenizer.batch_decode(outputs, add_special_tokens=False, skip_special_tokens=True)
         # output_text = [item.replace('<|endoftext|>', '') for item in output_text]

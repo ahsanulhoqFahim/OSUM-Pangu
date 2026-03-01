@@ -85,6 +85,8 @@ class Executor:
                 if batch_dict["target_lengths"].size(0) == 0:
                     continue
 
+                # print(f'数据的格式是：batch_dict={batch_dict}')
+
                 context = None
                 # Disable gradient synchronizations across DDP processes.
                 # Within this context, gradients will be accumulated on module

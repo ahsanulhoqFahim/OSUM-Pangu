@@ -654,8 +654,11 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
         txt = sample['txt']
         # ============handle task txt end =======================================
 
+        # 能不能对读入数据直接做操作，转换任务，记得改
+        if task_name == "<S2TCHAT> <TEXT2TOKEN>":
+            task_name = "<S2TCHAT>"
 
-
+        
         # ===============做补丁处理 ==========================================
         if if_have_other_name(txt):
             print(f"txt: {txt} 存在其他名称，跳过")
@@ -741,6 +744,13 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
         # ====================处理s2s think end============================================
 
 
+        #处理txt文本，使其符合要求
+        if  task_name != "<INTENT_CLASSIFICATION>" :
+            if  task_name in global_prompt_dict:
+                sample['txt'] = global_prompt_dict[task_name][0] + sample['txt']
+            
+            txt = sample['txt'] #转换txt，然后将转换后的txt变为tokens
+            
         # =======================得到 txt的数字化token =================================
         tokens, label = tokenizer.tokenize(process_text2(txt, sample.get("task", "<TRANSCRIBE>")))
         sample['tokens'] = tokens  # token是字符， label是数字
@@ -759,6 +769,17 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
                     utils_file.logging_info(f"error: question is empty, {sample}")
                     continue
                 prompt = question
+            elif "intent" in sample['extra']: #记得改，这个是意图识别的prompt
+                intent = sample['extra'].get('intent',"")
+                if intent == "":
+                    utils_file.logging_info(f"error:intent is empty ,{sample}")
+                    continue
+                if task_name not in global_prompt_dict:
+                    prompt = "<no_prompt>"
+                else:
+                    random_index = random.randint(0, len(global_prompt_dict[task_name]) - 1)
+                    prompt = global_prompt_dict[task_name][random_index]
+                prompt = prompt + ":" +intent
             else:
                 if insert_prompt is not None:
                     prompt = insert_prompt
@@ -768,6 +789,7 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
                     else:
                         random_index = random.randint(0, len(global_prompt_dict[task_name]) - 1)
                         prompt = global_prompt_dict[task_name][random_index]
+                        # prompt = global_prompt_dict[task_name][0]
             if prompt == "<no_prompt>":
                 # utils_file.logging_limit_print(f'no prompt for {task_name}')
                 sample['prompt'] = []
@@ -777,7 +799,7 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
             utils_file.logging_info(f"error in extract prompt, {e},task_name: {task_name}, sample: {sample}")
             continue
         # ====================处理prompt 结束 =======================================
-
+        # print(f'这个音频的task name是 {task_name} prompt是{prompt}')
 
 
         # ========================处理speech token ================================
@@ -832,8 +854,13 @@ def tokenize(data, tokenizer: HuggingFaceTokenizer, other_tokenze_conf={}, globa
             sample['output_type'] ='s2t_chat_fake'
         elif task_name == "<S2TCHAT> <THINKER>":
             sample['output_type'] ='s2t_chat_think'
+        elif task_name=="<INTENT_CLASSIFICATION>":
+            sample['output_type']='intent_classification' #新增加任务，记得改
         else:
            sample['output_type'] = 'text'
+
+        
+
         utils_file.logging_limit_print(f"output_type: {sample['output_type']}")
             # s2t end
         # =====================处理output_type 结束======================
@@ -891,7 +918,7 @@ def filter(data,
                     f"only_s2t, output_type is not s2t, continue, output_type: {output_type}")
                 continue
         if other_filter_conf.get("only_t2t", False):
-            if output_type != 'text2text':
+            if output_type not in ["text2text","intent_classification"]:
                 utils_file.logging_error(
                     f"only_t2t, output_type is not text2text, continue, output_type: {output_type}")
                 continue
@@ -902,7 +929,7 @@ def filter(data,
                 continue
 
         # 过滤不当文字wav比例
-        if "speech_token" in sample and sample["output_type"] not in ['text','text2text', 's2t_chat', 's2t_chat_fake', 's2t_chat_think']:
+        if "speech_token" in sample and sample["output_type"] not in ['text','text2text', 'intent_classification','s2t_chat', 's2t_chat_fake', 's2t_chat_think']:
             if len(sample['label']) * 0.8 >= len(sample['speech_token']):
                 utils_file.logging_error(f"label 长度过长,和token长度不匹配，continue, len(sample['label']):{len(sample['label'])}, len(sample['speech_token']):{len(sample['speech_token'])},  task: {sample['task']}, output_type: {sample['output_type']}")
                 continue
@@ -1634,7 +1661,7 @@ def dynamic_batch(data, max_frames_in_batch=12000, max_seq_in_batch=10000000):
                 longest_seq_token_with_text_streaming = new_seq
             else:
                 buf_speech_token_with_text_streaming.append(sample)
-        elif "output_type" in sample and sample["output_type"] == "text2text":
+        elif "output_type" in sample and sample["output_type"] in ["text2text", "intent_classification"]:
             new_seq = len(sample['label']) + len(sample.get('prompt', [])) + len(
                 sample.get('speech_token', []))
             # for instruct llm

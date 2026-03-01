@@ -1,0 +1,68 @@
+<TRANSCRIBE>:
+  - <asr>
+<TRANSCRIBE> <ALIGN>:
+  - <asr><align>
+<S2TCHAT>:
+  - <chat>
+<TRANSCRIBE> <S2TCHAT>:
+  - <asr><chat>
+<TRANSCRIBE> <EMOTION>:
+  - <asr><emotion>
+<EMOTION>:
+  - <emotion>
+<TRANSCRIBE> <STYLE>:
+  - <asr><style>
+<STYLE>:
+  - <style>
+<TRANSCRIBE> <CAPTION>:
+  - <asr><caption>
+<CAPTION>:
+  - <caption>
+<GENDER>:
+  - <gender>
+<TRANSCRIBE> <GENDER>:
+  - <asr><gender>
+
+<TRANSCRIBE> <AGE>:
+  - <asr><age>
+<AGE>:
+  - <age>
+
+<TRANSCRIBE> <AGE> <GENDER>:
+  - <asr><age><gender>
+<AGE> <GENDER>:
+  - <age><gender>
+<TRANSCRIBE> <STYLE> <AGE> <GENDER>:
+  - <asr><style><age><gender>
+<STYLE> <AGE> <GENDER>:
+  - <style><age><gender>
+<TRANSCRIBE> <CAPTION> <AGE> <GENDER>:
+  - <asr><caption><age><gender>
+<TRANSCRIBE> <EMOTION> <AGE> <GENDER>:
+  - <asr><emotion><age><gender>
+<TRANSCRIBE> <AGE> <GENDER> <STYLE> <EMOTION>:
+  - <asr><age><gender><style><emotion>
+<TRANSCRIBE> <CAPTION> <AGE> <GENDER> <EMOTION> <STYLE>:
+  - <asr><caption><age><gender><emotion><style>
+<INTENT_CLASSIFICATION>:
+  - 请对以下文本进行意图分类。
+  - 识别这段文字的意图类型。
+  - 判断输入文本属于哪种意图。
+  - 分析这段话的意图并分类。
+  - 对文本进行意图识别任务。
+  - 请判断用户输入的意图。
+  - 识别自然语言指令的意图。
+  - 对文本进行意图分析。
+  - 判断这段话的意图类别。
+  - 请识别文本意图并输出标签。
+  - 进行意图分类任务。
+  - 分析用户输入的意图类型。
+  - 识别文本的意图分类。
+  - 对输入进行意图识别。
+  - 判断自然语言指令的意图。
+  - Pleaseclassifytheintentofthefollowingtext.
+  - Identifytheintenttypeofthistext.
+  - Determinewhichintenttheinputtextbelongsto.
+  - Analyzetheintentofthetext.
+  - Determinetheintentcategoryofthistext.
+  - Pleaserecognizethetextintentandoutputthelabel.

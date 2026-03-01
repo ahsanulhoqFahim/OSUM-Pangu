@@ -246,6 +246,7 @@ def get_dataset(data_type,
             start_idx = 0
         lists = lists[start_idx:]
         print(f"recover data from {start_idx}, new list len:{len(lists)}")
+    # import pdb; pdb.set_trace() #记得改
     dataset = DataList(lists, shuffle=shuffle, partition=partition, split_num=split_num)
     true_list = dataset.true_lists
     if data_type == 'shard':
