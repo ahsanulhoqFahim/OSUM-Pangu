@@ -247,7 +247,6 @@ pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```python
 from huggingface_hub import snapshot_download
 
-# 下载Qwen2-Audio-7B模型
 snapshot_download(
     repo_id="ASLP-lab/I-OSUM-Pangu",
     local_dir="path",
